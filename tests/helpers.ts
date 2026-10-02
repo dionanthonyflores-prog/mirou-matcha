@@ -82,6 +82,23 @@ export async function waitForScrollToStop(page: Page) {
 }
 
 /**
+ * Bring something on screen the way a customer's swipe or mouse wheel would: through the site's
+ * smooth-scrolling library (Lenis), so it always knows where the page is. Playwright's own scrolling
+ * jumps the page directly, and on slower computers (like GitHub's) Lenis can miss that jump; the next
+ * "+ order this" then glides from the wrong starting point and overshoots.
+ */
+export async function scrollToLikeACustomer(page: Page, target: Locator) {
+  await target.evaluate(el => {
+    const lenis = (0, eval)('typeof lenis === "undefined" ? null : lenis');
+    // Work out the spot from the page's real position, so this also puts Lenis back in step if it had lost track
+    const y = Math.max(0, el.getBoundingClientRect().top + window.scrollY - innerHeight / 3);
+    if (lenis) lenis.scrollTo(y, { immediate: true, force: true });
+    else window.scrollTo(0, y);
+  });
+  await waitForScrollToStop(page);
+}
+
+/**
  * Check a section ends up just under the sticky header (70px from the top, give or take 12px).
  * It waits for the page to STOP moving and for late photos to finish loading first, because
  * BUG-003 reached the right spot and was then pushed away by a photo loading in.

@@ -28,15 +28,25 @@ test.describe('Page health', { tag: '@REQ-13' }, () => {
 
   test('TC-49 every photo loads, including the hojicha ones behind their tab', async ({ page }) => {
     await page.goto('./');
-    await scrollThroughPage(page);
-    const notLoaded = () => page.evaluate(() => [...document.images]
-      .filter(i => i.getAttribute('src') && !i.closest('[hidden]') && !(i.complete && i.naturalWidth > 0))
-      .map(i => i.getAttribute('src')));
-    expect(await notLoaded()).toEqual([]);
+    // Scroll past each photo slowly, like a person would, then check they all loaded. A late-loading photo
+    // that only flashed past may wait until it is on screen again, so any still missing is looked at again.
+    const notLoaded = () => page.evaluate(() => {
+      const missing = [...document.images].filter(i => i.getAttribute('src') && i.id !== 'lb-img' && !i.closest('[hidden]') && !(i.complete && i.naturalWidth > 0));
+      missing[0]?.scrollIntoView({ block: 'center' });
+      return missing.map(i => i.getAttribute('src'));
+    });
+    const lookAtEachPhoto = async () => {
+      const photos = page.locator('img[src]:not(#lb-img):not([aria-hidden="true"])');   // skip the photo strip's repeated copies
+      for (const photo of await photos.all()) {
+        await photo.evaluate(i => { if (!i.closest('[hidden]')) i.scrollIntoView({ block: 'center' }); });
+        await page.waitForTimeout(100);
+      }
+      await expect.poll(notLoaded, { message: 'every photo should load', timeout: 15_000 }).toEqual([]);
+    };
+    await lookAtEachPhoto();
     await page.getByRole('tab', { name: 'hojicha' }).click();
     await expect(page.locator('#panel-hojicha')).toBeVisible();
-    for (const photo of await page.locator('#panel-hojicha img').all()) await photo.scrollIntoViewIfNeeded();   // late-loading photos load when near the screen
-    await expect.poll(notLoaded).toEqual([]);
+    await lookAtEachPhoto();
   });
 });
 

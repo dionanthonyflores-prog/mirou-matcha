@@ -19,7 +19,7 @@ Requirements (REQ-xx) are listed in the [test plan](test-plan.md#in-scope). Bugs
 | TC-02 | Tap the hojicha tab | The 4 hojicha drinks show with the right prices. Matcha is hidden. | All | |
 | TC-03 | Tap hojicha, then tap matcha straight away, while the cards are still moving | The menu switches to matcha. The second tap is not lost. | All | BUG-004 |
 | TC-04 | Compare menu prices with the order builder | All 10 drinks show the same price in both places. | All | |
-| TC-05 | Tap "+ order this" on each of the 10 drinks | Each one picks that drink in the order builder and scrolls there. | All | |
+| TC-05 | Tap "+ order this" on each of the 10 drinks | Each one picks that drink in the order builder, and the page moves down to the builder. | All | |
 
 ### Order builder: [`tests/order-builder.spec.ts`](../tests/order-builder.spec.ts)
 
@@ -95,7 +95,7 @@ These tests set the browser's clock to exact times.
 | ID | Test case | Expected result | Runs on | Guards |
 | --- | --- | --- | --- | --- |
 | TC-48 | Load the page and scroll to the bottom | Right title. No script errors, console errors or missing files. | All | |
-| TC-49 | Scroll through the page and open the hojicha tab | Every photo loads. | All | |
+| TC-49 | Scroll past every photo, including the hojicha tab | Every photo loads. | All | |
 | TC-50 | Scroll through the page | The page is never wider than the screen (no sideways scrolling). | All | |
 | TC-51 | Read the share tags | Title, description, full web address, and a 1200 × 630 share picture. | All | |
 | TC-52 | Check every photo | Each has a description for screen readers. Only decorative copies are left empty. | All | |

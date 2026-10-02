@@ -57,7 +57,7 @@ Full reports, with steps, root causes, fixes and screenshots, are in the [defect
 ## Highlights
 
 - **The regression tests are proven to catch their bugs.** The BUG-002 and BUG-003 tests were run against the old, buggy version of the site. They failed there, and only where the real bug was: the "Reviews" link failed while the other 4 menu links passed. They pass on the fixed version.
-- **Real bugs were told apart from test problems.** Seven failures turned out to be test or tooling issues, such as lazy-loaded photos, a mouse drag versus a finger swipe, and a test that tapped faster than any person could. Each was investigated and fixed in the test, not hidden. See [Investigated, not a bug](defect-log.md#investigated-not-a-bug).
+- **Real bugs were told apart from test problems.** Eight failures turned out to be test or tooling issues, such as lazy-loaded photos, a mouse drag versus a finger swipe, and a test that tapped faster than any person could. Each was investigated and fixed in the test, not hidden. See [Investigated, not a bug](defect-log.md#investigated-not-a-bug).
 - **Flaky tests aren't tolerated.** A test that only failed sometimes was traced to its cause, fixed, and then repeated 5 times on each device (15/15 passed) before it was trusted. An independent run also caught a test running too close to its time limit, so every test's run time was checked against its limit.
 - **Evidence first.** After BUG-001 (where no "before" screenshot was kept), every bug had its evidence captured before the fix.
 

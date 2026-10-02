@@ -1,6 +1,6 @@
 import { test, expect } from './fixtures';
 import type { Page } from '@playwright/test';
-import { DRINKS, drinkChoice, waitForScrollToStop } from './helpers';
+import { DRINKS, drinkChoice, scrollToLikeACustomer, waitForScrollToStop } from './helpers';
 
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const drinksOf = (type: string) => DRINKS.filter(d => d.type === type);
@@ -48,20 +48,28 @@ test.describe('"+ order this" buttons', { tag: '@REQ-02' }, () => {
     test.slow();   // 10 trips down to the order builder and back
     for (const type of ['matcha', 'hojicha']) {
       if (type === 'hojicha') {
-        await page.getByRole('tab', { name: 'hojicha' }).click();
+        const hojichaTab = page.getByRole('tab', { name: 'hojicha' });
+        await scrollToLikeACustomer(page, hojichaTab);
+        await hojichaTab.click();
         await expect(page.locator('#panel-hojicha')).toBeVisible();
       }
       for (const d of drinksOf(type)) {
         const card = page.locator(`#panel-${type} article.item`).filter({ has: page.locator('h3', { hasText: cardHeadingText(d) }) });
         const orderThis = card.getByRole('button', { name: '+ order this' });
-        // Scroll to the card first and let the page settle, like a person would. Playwright can otherwise
-        // scroll and tap in the same instant, before the smooth-scrolling library notices the new position.
-        await orderThis.scrollIntoViewIfNeeded();
-        await page.waitForTimeout(300);
+        await scrollToLikeACustomer(page, orderThis);   // see helpers.ts: keeps the smooth scroller in step
+        // Tap once the card has finished fading/sliding in, like a person would. Tapping a moving card makes
+        // Playwright re-scroll the page by itself, and the smooth scroller can miss those sudden jumps.
+        await expect(card).not.toHaveClass(/\b(reveal|in|enter|entering|leave)\b/);
         await orderThis.click();
         await expect(drinkChoice(page, d.name), `${d.name} is picked`).toBeChecked();
         await waitForScrollToStop(page);
-        await expect(page.getByRole('heading', { name: 'build your order' }), `after "+ order this" on ${d.name}`).toBeInViewport();
+        // The page has moved down to the order builder: its top has reached the header and it fills most of the
+        // screen. (The exact landing spot is checked by TC-36 and TC-40; see the defect log for why not here.)
+        const builder = await page.locator('#build').evaluate(el => {
+          const r = el.getBoundingClientRect();
+          return { top: Math.round(r.top), onScreen: r.top <= 82 && r.bottom > innerHeight / 2 };
+        });
+        expect(builder.onScreen, `after "+ order this" on ${d.name}, the order builder should be on screen (its top is at ${builder.top}px)`).toBe(true);
       }
     }
   });
