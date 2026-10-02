@@ -90,6 +90,7 @@ test.describe('Order slip', { tag: '@REQ-04' }, () => {
 
 test.describe('Saved order', { tag: '@REQ-05' }, () => {
   test('TC-14 the order is still there after the page is reloaded', { tag: '@BUG-002' }, async ({ page }) => {
+    test.slow();   // about 27 taps on the + button
     await addToOrder(page, 'Toasted Milk Cereal', 2, 'oatmilk');
     await addToOrder(page, 'Matcha latte', 20);
     await addToOrder(page, 'Matcha latte', 5);

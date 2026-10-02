@@ -7,6 +7,9 @@ const baseURL = process.env.BASE_URL ?? 'http://localhost:5174/';
 
 export default defineConfig({
   testDir: './tests',
+  // Time limit per test. Real animations and smooth scrolling are left on (like a customer sees them),
+  // so tests with many taps need more than Playwright's default 30 seconds on a busy computer.
+  timeout: 60_000,
   fullyParallel: true,
   forbidOnly: onGitHub,               // a test accidentally left as test.only fails the run on GitHub
   retries: onGitHub ? 1 : 0,          // one retry on GitHub; a test that only passes on retry is marked "flaky" in the report
