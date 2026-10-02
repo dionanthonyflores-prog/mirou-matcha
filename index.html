@@ -352,6 +352,7 @@
   .receipt .fine { font-family: "DM Sans", sans-serif; font-size: .8rem; color: var(--muted); text-align: center; margin: 10px 0 0; }
   .receipt .status { font-family: "DM Sans", sans-serif; font-size: .9rem; color: var(--matcha); text-align: center; margin: 8px 0 0; min-height: 1.4em; }
   .receipt .clear { display: block; margin: 6px auto 0; border: 0; background: none; color: var(--muted); font: .8rem "DM Sans", sans-serif; text-decoration: underline; cursor: pointer; }
+  .receipt .clear[hidden] { display: none; }   /* display: block above would otherwise show it on an empty slip */
   @keyframes slip-in { from { opacity: 0; transform: translateY(-8px); } }
   @keyframes bump { 50% { transform: scale(1.06); } }
   .receipt-wrap.bump { animation: bump .45s var(--ease); }
