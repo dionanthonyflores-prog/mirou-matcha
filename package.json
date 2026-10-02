@@ -1,0 +1,15 @@
+{
+  "name": "mirou-matcha",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website for mirou matcha, plus its automated Playwright tests",
+  "scripts": {
+    "serve": "node scripts/serve.js",
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.4"
+  }
+}

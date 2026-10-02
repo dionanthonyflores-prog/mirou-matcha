@@ -14,3 +14,9 @@ index - Copy.html
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Installed tools and test output (re-created on every run)
+node_modules/
+test-results/
+playwright-report/
+blob-report/
