@@ -219,7 +219,7 @@
   .order .btn { background: #fff; color: var(--matcha-deep); }
   .order .btn:hover { background: #f3e3b4; }
   .order .frame { border-radius: var(--radius); width: 100%; max-width: 420px; justify-self: center; box-shadow: 0 24px 50px rgba(0,0,0,.3); }
-  .order .frame img { width: 100%; }
+  .order .frame img { width: 100%; height: auto; }   /* width/height in the HTML reserve its space before it loads */
 
   /* Reviews */
   .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
@@ -877,7 +877,7 @@
         </div>
         <a class="btn" href="https://m.me/mirou.matchaph" target="_blank" rel="noopener">💬 Order on Messenger</a>
       </div>
-      <div class="frame"><img src="images/delivery.jpg" alt="In-house delivery now available. Message us for orders." loading="lazy"></div>
+      <div class="frame"><img src="images/delivery.jpg" alt="In-house delivery now available. Message us for orders." loading="lazy" width="800" height="1000"></div>
     </div>
   </section>
 
