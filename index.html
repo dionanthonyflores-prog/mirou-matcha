@@ -1277,8 +1277,10 @@
   const wait = ms => new Promise(r => setTimeout(r, ms));
   const cardsIn = panel => [...panel.querySelectorAll(".menu-grid .item, .extras .extra")];
   let switching = false;
-  document.querySelectorAll(".tab").forEach(tab => tab.addEventListener("click", async () => {
-    if (switching || tab.getAttribute("aria-selected") === "true") return;
+  let queued = null;   // a tab tapped while the cards are still moving waits here instead of being ignored
+  async function showTab(tab) {
+    if (switching) { queued = tab; return; }
+    if (tab.getAttribute("aria-selected") === "true") return;
     switching = true;
     const fromPanel = document.querySelector('[role="tabpanel"]:not([hidden])');
     const toPanel = $(tab.getAttribute("aria-controls"));
@@ -1311,7 +1313,9 @@
       inn.forEach(el => el.classList.remove("entering"));
     }
     switching = false;
-  }));
+    if (queued) { const next = queued; queued = null; showTab(next); }   // now do the tap that came in meanwhile
+  }
+  document.querySelectorAll(".tab").forEach(tab => tab.addEventListener("click", () => showTab(tab)));
 
   // Magnetic buttons: they lean gently toward the mouse (only on computers with a mouse)
   if (!calm && matchMedia("(hover: hover) and (pointer: fine)").matches) {
