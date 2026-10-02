@@ -1,5 +1,7 @@
 # mirou matcha
 
+[![Tests](https://github.com/dionanthonyflores-prog/mirou-matcha/actions/workflows/tests.yml/badge.svg)](https://github.com/dionanthonyflores-prog/mirou-matcha/actions/workflows/tests.yml)
+
 Website for **mirou matcha**, a home-based matcha slow bar in Bay, Laguna, Philippines.
 Customers can browse the menu, build an order, check if their town is in the delivery area, and send the order on Messenger in one tap.
 
@@ -14,7 +16,7 @@ Customers can browse the menu, build an order, check if their town is in the del
 ## What it does
 
 - **Menu with matcha and hojicha tabs.** Every drink card has a "+ order this" button that jumps to the order builder with that drink already picked.
-- **Order builder.** Pick a drink, regular milk or oatmilk (+₱10), and how many. The order slip keeps a running total, joins repeat drinks into one line, and remembers the order if the page is refreshed.
+- **Order builder.** Pick a drink, regular milk or oatmilk (+₱10), and how many (up to 20 of each drink). The order slip keeps a running total, joins repeat drinks into one line, and remembers the order if the page is refreshed.
 - **Send on Messenger.** "Copy order & open Messenger" copies a ready-made order message (drinks, total, pick up or delivery, notes) and opens the shop's Messenger chat.
 - **Delivery checker.** Tap or type a town to see if it's in the delivery area. It understands typing without accents ("Los Banos") and local nicknames ("UPLB", "Elbi"). Towns outside the list get an "ask us on Messenger" link.
 - **"Open now" badge.** Shows *Open now*, *Closing soon* (last 30 minutes) or *Closed*, always in Philippine time, even if the visitor's phone is set to another time zone.
@@ -28,7 +30,7 @@ Customers can browse the menu, build an order, check if their town is in the del
 - One file, `index.html`, with the HTML, CSS and JavaScript together. No framework and no build step.
 - The only outside pieces are Google Fonts and [Lenis](https://github.com/darkroomengineering/lenis) for smooth scrolling.
 - The prices and delivery towns each live in one list in the script (`DRINKS` and `AREAS`), so the menu, order builder and delivery checker always agree.
-- Hosted for free on GitHub Pages.
+- Hosted for free on GitHub Pages, published automatically by GitHub Actions only after all tests pass.
 
 ## Run it on your computer
 
@@ -44,7 +46,20 @@ Then open http://localhost:5174 in your browser.
 
 ## Testing
 
-A QA case study for this site is in progress: test plan, test cases, automated Playwright tests on desktop and phone sizes, and a defect log.
+**[Read the QA case study →](qa/README.md)**
+
+- **54 automated test cases** with Playwright and TypeScript, run on desktop Chrome, an Android phone and an iPhone (243 runs in total).
+- **They run on GitHub on every push.** The site is only published if every test passes. [Latest test report](https://dionanthonyflores-prog.github.io/mirou-matcha/report/)
+- **5 real bugs** found, fixed and covered by regression tests, with before/after evidence in the [defect log](qa/defect-log.md).
+- Plus a [test plan](qa/test-plan.md) and [test cases with traceability](qa/test-cases.md).
+
+To run the tests on your computer:
+
+```bash
+npm install
+npx playwright install chromium webkit
+npm test
+```
 
 ## Credits
 

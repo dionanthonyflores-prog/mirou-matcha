@@ -1,0 +1,198 @@
+# Defect log
+
+Five real bugs were found and fixed. Each fix has its own commit, and each bug except BUG-001 has an automated regression test that was seen to **fail on the buggy code and pass on the fixed code**.
+
+Severity and priority are defined in the [test plan](test-plan.md#6-bug-reporting).
+
+| ID | Summary | Severity | Priority | Found by | Status | Fix | Regression test |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| [BUG-001](#bug-001) | White patch covers part of the cup in the Seasalt Hojicha photo | Minor | High | Manual visual check | Closed | Photo re-prepared | MT-01 (manual) |
+| [BUG-002](#bug-002) | The same drink can go past the 20-cup limit, then silently drops back to 20 after a reload | Major | High | Code review, then a script | Closed | [`385480c`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/385480c) | TC-11, TC-14 |
+| [BUG-003](#bug-003) | On phones, the menu's "Reviews" link lands about 440px short on a first visit | Minor | Medium | Automated check of the live site | Closed | [`c3c66f8`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/c3c66f8) | TC-36 |
+| [BUG-004](#bug-004) | A quick second tap on the menu tabs is ignored | Minor | Medium | Automated test TC-03 | Closed | [`c23eaae`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/c23eaae) | TC-03 |
+| [BUG-005](#bug-005) | "clear order" link shows on an empty order slip | Trivial | Low | Automated test TC-08 | Closed | [`f676ea1`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/f676ea1) | TC-08 |
+
+---
+
+## BUG-001
+
+**White patch covers part of the cup in the Seasalt Hojicha photo**
+
+| | |
+| --- | --- |
+| Severity / priority | Minor / High. The site still works, but the photo is of a best-selling drink, on the menu every customer sees. |
+| Found | 29 Sep 2026, during a visual review of the menu (local preview) |
+| Fixed | 29 Sep 2026 |
+| Status | Closed |
+
+**Steps to reproduce**
+1. Open the site and go to the menu.
+2. Tap the **hojicha** tab.
+3. Look at the **Seasalt Hojicha** card.
+
+**Expected:** the cup is shown whole, like the other drinks.
+**Actual:** a white, paper-coloured patch covers part of the cup's rim near the top-left.
+
+**Root cause:** the menu photos are cut out of the shop's own menu-board image. The handwritten "best seller" note sits just above and to the left of this cup, and a bit of the lettering came along when the cup was cut out. A paper-coloured patch was painted over the letters, but it was too big and overlapped the cup's rim.
+
+**Fix:** the patch was shrunk to cover only the leftover letters, the cup was cut out again from the original menu image, and it was sharpened again.
+
+**Verification:** visual check of the new photo at full size on desktop and phone. Current photo: [`images/menu-seasalt-hojicha.jpg`](../images/menu-seasalt-hojicha.jpg).
+
+**Evidence:** no "before" screenshot was kept. *Lesson learned:* every later bug had its evidence captured **before** fixing it.
+
+**Why there is no automated test:** judging whether a photo "looks right" is far cheaper for a person than for a script. It is covered by manual test MT-01, a visual check of every photo after any photo change.
+
+---
+
+## BUG-002
+
+**The same drink can go past the 20-cup limit, then silently drops back to 20 after a reload**
+
+| | |
+| --- | --- |
+| Severity / priority | Major / High. The customer's order and total change without warning. |
+| Found | 1 Oct 2026, by reading the order-builder code, then confirmed with a Playwright script |
+| Environment | Desktop Chrome and Edge (local preview). The logic is the same on every device. |
+| Fixed | 2 Oct 2026, [`385480c`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/385480c) |
+| Status | Closed |
+
+**Steps to reproduce**
+1. In "build your order", pick **Matcha latte** and press **+** until the quantity shows **20**.
+2. Press **+ Add to order**.
+3. Repeat steps 1 and 2.
+4. Reload the page.
+
+**Expected:** the slip never shows more than 20 of one drink, and reloading changes nothing.
+**Actual:** after step 3 the slip shows **40× Matcha latte, ₱6,400**. After the reload it shows **20× Matcha latte, ₱3,200**, with no message.
+
+| Before: after adding 20 twice | Before: after reloading |
+| --- | --- |
+| <img src="evidence/BUG-002-before-1-after-adding-20-twice.png" width="300" alt="Order slip showing 40× Matcha latte, total ₱6,400"> | <img src="evidence/BUG-002-before-2-after-reload.png" width="300" alt="Order slip showing 20× Matcha latte, total ₱3,200"> |
+
+**Root cause:** there were three separate limits. The quantity buttons stopped at 20 and the saved order was cut to 20 when loaded, but adding to an existing line had **no** limit.
+
+**Fix:** one setting, `MAX_QTY = 20`, used everywhere. Adding only fills a line up to 20. If something is left over, the slip says *"20 of one drink is the most the order slip takes. For a bigger order, just message us on Messenger ✿"*.
+
+| After: adding 20 twice | After: reloading |
+| --- | --- |
+| <img src="evidence/BUG-002-after-1-after-adding-20-twice.png" width="300" alt="Order slip showing 20× Matcha latte, ₱3,200, with the limit message"> | <img src="evidence/BUG-002-after-2-after-reload.png" width="300" alt="Order slip still showing 20× Matcha latte, ₱3,200"> |
+
+**Verification:**
+- TC-11 (20 + 20, a full line plus 1, 15 + 10) and TC-14 (reload) pass on desktop, Android and iPhone.
+- Both tests **fail on all 3 set-ups** when run against the old code (commit `0558082`).
+
+---
+
+## BUG-003
+
+**On phones, the menu's "Reviews" link lands about 440px short on a first visit**
+
+| | |
+| --- | --- |
+| Severity / priority | Minor / Medium. The customer lands on the wrong part of the page and has to scroll. |
+| Found | 2 Oct 2026, by an automated check of the live site right after it went online |
+| Environment | Edge via Playwright, 390 × 844 phone size. Independently reproduced by Dion in Chrome DevTools on an iPhone 16 Pro Max preset (440 × 956). Desktop is not affected. |
+| Fixed | 2 Oct 2026, [`c3c66f8`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/c3c66f8) |
+| Status | Closed |
+
+**Steps to reproduce**
+1. Open the site fresh on a phone (or a phone-size window), without scrolling first.
+2. Tap the **☰ menu** button.
+3. Tap **Reviews**.
+
+**Expected:** the page scrolls so "from our mirou besties" sits just under the header.
+**Actual:** the page stops on the "in-house delivery" photo. The Reviews heading is about 437px further down.
+
+<img src="evidence/BUG-003-before-phone-after-tapping-reviews.png" width="260" alt="Phone screen showing the delivery photo instead of the Reviews section">
+
+**Root cause:** the delivery photo above the Reviews section loads late (`loading="lazy"`), and the page did not reserve space for it. The scroll reached the right place, then the photo loaded, grew from 0 to 490px tall, and pushed Reviews down. On desktop the photo sits beside the text, so nothing below it moves.
+
+**Fix:** give the photo its real size in the HTML (`width="800" height="1000"`) with `height: auto` in the CSS, so the browser holds a correctly shaped space before the photo arrives.
+
+<img src="evidence/BUG-003-after-phone-after-tapping-reviews.png" width="260" alt="Phone screen showing the Reviews heading right under the header">
+
+**Verification:**
+- TC-36 taps all 5 phone-menu links, each on a fresh page. It waits until the page has stopped moving and the photos have loaded, then checks the section is 58–82px from the top. It passes on Android and iPhone.
+- Against the old code, the "Reviews" case **fails on both phones** and the other 4 links pass, which matches the real bug exactly.
+
+---
+
+## BUG-004
+
+**A quick second tap on the menu tabs is ignored**
+
+| | |
+| --- | --- |
+| Severity / priority | Minor / Medium. The customer has to tap again, which feels broken. It is easy to hit when correcting a wrong tap. |
+| Found | 2 Oct 2026, by automated test TC-03 while the test suite was being written |
+| Environment | Desktop Chrome and Android (Chromium) every time, when the second tap comes within about 1.5 seconds. Also confirmed on iPhone (WebKit) with a timed check. |
+| Fixed | 2 Oct 2026, [`c23eaae`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/c23eaae) |
+| Status | Closed |
+
+**Steps to reproduce**
+1. Go to the menu.
+2. Tap **hojicha**.
+3. Within a second, tap **matcha**.
+
+**Expected:** the menu ends up on matcha.
+**Actual:** it stays on hojicha. Three seconds later the hojicha tab is still selected.
+
+| Before (desktop) | Before (phone) |
+| --- | --- |
+| <img src="evidence/BUG-004-before-desktop-still-on-hojicha-after-tapping-matcha.png" width="420" alt="Desktop menu still on the hojicha tab after tapping matcha"> | <img src="evidence/BUG-004-before-phone-still-on-hojicha-after-tapping-matcha.png" width="200" alt="Phone menu still on the hojicha tab after tapping matcha"> |
+
+**Root cause:** while the cards animate (about 1.8 seconds), a "busy" flag made the tab code **ignore** any new tap, so the second tap was simply lost.
+
+**Fix:** keep the busy flag, because it stops two animations overlapping, but remember the latest tap and carry it out as soon as the animation finishes.
+
+| After (desktop) | After (phone) |
+| --- | --- |
+| <img src="evidence/BUG-004-after-desktop-switches-to-matcha.png" width="420" alt="Desktop menu on the matcha tab after the quick tap"> | <img src="evidence/BUG-004-after-phone-switches-to-matcha.png" width="200" alt="Phone menu on the matcha tab after the quick tap"> |
+
+**Verification:**
+- TC-03 failed on desktop and Android before the fix and passes after.
+- A timed check (tap matcha 0.6 s after hojicha, look 3 s later) shows "hojicha" before the fix and "matcha" after, on desktop and phone.
+
+---
+
+## BUG-005
+
+**"clear order" link shows on an empty order slip**
+
+| | |
+| --- | --- |
+| Severity / priority | Trivial / Low. Tapping it does nothing harmful, but it looks unfinished. |
+| Found | 2 Oct 2026, by automated test TC-08 |
+| Environment | All 3 set-ups (desktop, Android, iPhone) |
+| Fixed | 2 Oct 2026, [`f676ea1`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/f676ea1) |
+| Status | Closed |
+
+**Steps to reproduce:** open the site and look at the order slip before adding anything.
+**Expected:** only "no drinks yet", with no "clear order" link.
+**Actual:** "clear order" shows under the empty slip.
+
+| Before | After |
+| --- | --- |
+| <img src="evidence/BUG-005-before-empty-slip-shows-clear-order.png" width="300" alt="Empty order slip with a clear order link at the bottom"> | <img src="evidence/BUG-005-after-empty-slip-no-clear-order.png" width="300" alt="Empty order slip without the clear order link"> |
+
+**Root cause:** the script hides the link with the HTML `hidden` attribute, but the link's own style (`display: block`) overrides it. The delivery-area box already had a rule to prevent this, and this link did not.
+
+**Fix:** add `.receipt .clear[hidden] { display: none; }`.
+
+**Verification:** TC-08 failed on all 3 set-ups before the fix and passes after.
+
+---
+
+## Investigated, not a bug
+
+Not every failing test means the product is broken. These failures were investigated and turned out to be problems with the test or the test tools. In each case the test was fixed, not the site.
+
+| What failed | What was found | What was done |
+| --- | --- | --- |
+| 4 hojicha photos "not loaded" (first live check) | They are lazy-loaded behind the hojicha tab and load as soon as the tab is opened. That is correct behaviour. | The check now opens the tab and scrolls to each photo (TC-49). |
+| Swipe test on phones (TC-47) | A *mouse* drag starts the browser's "drag this image" action, which cancels the swipe. A simulated *finger* swipe works: next photo, then previous, and the viewer stays open. | The test now uses a real touch swipe in Chromium. iPhone swiping moved to manual test MT-03, because WebKit can't simulate it. |
+| "+ order this" landed in the wrong place (TC-05), only sometimes | Playwright scrolled to the card and tapped in the same instant, before the smooth-scrolling library had registered the new position. Customer-style scrolling (mouse wheel, finger, Home key) landed exactly right 10 out of 10 times. | The test now lets the page settle before tapping. Stability was confirmed with 5 repeat runs on each set-up (15/15 passed). |
+| Copied order text did not match (TC-22) | The test read the order before the "flying cup" animation had finished. Windows also stores copied line breaks differently. | The test waits for the slip to update and ignores the line-break difference. |
+| iPhone tests timed out | The iPhone browser engine (WebKit) takes about 1.2 seconds per click when run on Windows, versus 0.12 seconds for Chrome. That is the test engine, not the site. | The iPhone set-up gets a longer time limit. |
+| Radio buttons could not be "checked" | The real radio buttons are hidden behind pill-shaped labels by design. Customers tap the label. | Tests tap the label, like a customer, then confirm the choice took. |
