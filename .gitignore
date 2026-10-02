@@ -1,0 +1,16 @@
+# Files git should ignore, so they are never uploaded to GitHub.
+
+# Original, full-size photos (the site uses the smaller copies in images/)
+raw-photos/
+
+# Old copy of the page and the bundle that was uploaded to InfinityFree
+index - Copy.html
+*.zip
+
+# Settings for the Claude app on this laptop
+.claude/
+
+# Files Windows and Mac create on their own
+Thumbs.db
+desktop.ini
+.DS_Store

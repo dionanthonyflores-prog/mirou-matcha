@@ -1,0 +1,1486 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mirou matcha · homebased matcha slow bar in Bay, Laguna</title>
+<meta name="description" content="mirou matcha is a homebased matcha slow bar in Bay, Laguna. Hand-whisked matcha and hojicha drinks, open daily 12nn–9pm, for pick up and in-house delivery. Message us for orders.">
+<link rel="icon" href="images/logo.jpg">
+<link rel="apple-touch-icon" href="images/logo.jpg">
+<meta name="theme-color" content="#34529a">
+
+<!-- Link preview card for Facebook, Messenger, Instagram DMs, etc.
+     Facebook needs the full address to find the picture. If the site moves to a new address,
+     change it below (2 places). -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="mirou matcha">
+<meta property="og:locale" content="en_PH">
+<meta property="og:title" content="mirou matcha · homebased matcha slow bar in Bay, Laguna">
+<meta property="og:description" content="Hand-whisked matcha & hojicha. Open daily 12nn–9pm. Pick up in Bay, or delivery around Calamba, Los Baños, Cabuyao & Victoria.">
+<meta property="og:url" content="https://dionanthonyflores-prog.github.io/mirou-matcha/">
+<meta property="og:image" content="https://dionanthonyflores-prog.github.io/mirou-matcha/images/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="mirou matcha: good things take time. A hand holding an iced matcha latte.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Gochi+Hand&display=swap" rel="stylesheet">
+<style>
+  /* ===== Brand colors (taken from her menu boards) — change these to re-theme the site ===== */
+  :root {
+    --ink: #34529a;          /* the blue she writes her menus in */
+    --peri: #9db4ea;         /* periwinkle price bubbles */
+    --paper: #f8f7f3;        /* menu paper */
+    --card: #fefdf9;         /* matches the background of the drink photos */
+    --cream: #efebe2;
+    --matcha: #4f8a3c;
+    --matcha-deep: #23492a;
+    --hoji: #6b4a2b;
+    --star: #e9c23b;
+    --text: #2b3242;
+    --muted: #677089;
+    --radius: 20px;
+    --ease: cubic-bezier(.16, 1, .3, 1); /* slow, soft "luxury" easing used by all hover motion */
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  * { box-sizing: border-box; }
+  html:not(.lenis) { scroll-behavior: smooth; }
+  html.lenis, html.lenis body { height: auto; } /* needed by Lenis smooth scrolling */
+  body {
+    margin: 0;
+    font-family: "DM Sans", system-ui, sans-serif;
+    color: var(--text);
+    background: var(--paper);
+    line-height: 1.6;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; line-height: 1.1; margin: 0; color: var(--ink); }
+  .hand { font-family: "Gochi Hand", cursive; color: var(--hoji); font-size: 1.35rem; margin: 0 0 6px; }
+  .mono { font-family: "DM Mono", ui-monospace, monospace; text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; }
+
+  /* Film-grain texture like her menu backgrounds */
+  .grain { position: relative; isolation: isolate; }
+  .grain::after {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: var(--grain); opacity: .22; mix-blend-mode: multiply;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink); color: #fff; text-decoration: none;
+    padding: 12px 22px; border-radius: 999px; font-weight: 700;
+    transition: transform .4s var(--ease), background .3s, color .3s, translate .6s var(--ease); /* translate = magnetic pull */
+  }
+  .btn:hover { background: #26407d; transform: translateY(-2px); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: #fff; }
+
+  /* ===== Header ===== */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(248, 247, 243, .9); backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e7e3d8;
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: "Fraunces", serif; font-size: 1.3rem; font-weight: 600; color: var(--ink); }
+  .brand img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+  .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+  .nav ul a { text-decoration: none; color: var(--muted); font-weight: 500; }
+  .nav ul a:hover { color: var(--ink); }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding-block: 56px 80px;
+    background: linear-gradient(180deg, #ece6dd 0%, #e2ddcf 45%, #b9c4a6 80%, #8fa97e 100%);
+  }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+  .hero h1 { font-size: clamp(2.6rem, 6.5vw, 4.6rem); }
+  .hero .lead { font-size: 1.15rem; color: #4d5568; max-width: 34ch; margin: 18px 0 28px; }
+  .hero .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin: 28px 0 0; padding: 0; list-style: none; }
+  .tags li { background: rgba(255,255,255,.7); padding: 6px 14px; border-radius: 999px; font-size: .9rem; }
+  .hero-photo { position: relative; max-width: 440px; justify-self: center; width: 100%; }
+  .hero-photo .frame { border-radius: 240px 240px var(--radius) var(--radius); box-shadow: 0 30px 60px rgba(35, 73, 42, .25); }
+  .hero-photo img { aspect-ratio: 3 / 4; object-fit: cover; width: 100%; }
+  .hero-photo .sticker {
+    position: absolute; left: -18px; bottom: 36px;
+    width: 104px; height: 104px; border-radius: 50%;
+    background: var(--peri); color: #fff; display: grid; place-items: center; text-align: center;
+    font-family: "Gochi Hand", cursive; font-size: 1.15rem; line-height: 1.1; transform: rotate(-10deg);
+    box-shadow: 0 10px 24px rgba(52, 82, 154, .3);
+  }
+
+  /* ===== Sections ===== */
+  section { padding-block: 80px; }
+  .section-head { text-align: center; margin-bottom: 40px; }
+  .section-head h2 { font-size: clamp(2rem, 4.5vw, 2.8rem); }
+  .section-head p.sub { color: var(--muted); max-width: 52ch; margin: 12px auto 0; }
+
+  /* About */
+  .about .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: center; }
+  .about .frame { border-radius: var(--radius); }
+  .about img { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
+  .about blockquote {
+    margin: 22px 0; padding: 18px 22px; border-left: 3px solid var(--peri);
+    background: #fff; border-radius: 0 14px 14px 0; color: var(--ink); line-height: 1.8;
+  }
+  .about h2 { font-size: clamp(2rem, 4.5vw, 2.8rem); }
+  .about p { color: var(--muted); font-size: 1.05rem; }
+
+  /* Menu */
+  /* The menu background shifts from soft matcha green to roasted hojicha brown when the tab changes.
+     @property lets the browser animate the two gradient colors smoothly. */
+  @property --menu-a { syntax: "<color>"; inherits: false; initial-value: #efebe2; }
+  @property --menu-b { syntax: "<color>"; inherits: false; initial-value: #dfe8d0; }
+  .menu {
+    --menu-a: #efebe2; --menu-b: #dfe8d0;
+    background: linear-gradient(180deg, var(--menu-a) 0%, var(--menu-b) 100%);
+    transition: --menu-a 1.2s var(--ease), --menu-b 1.2s var(--ease);
+    overflow-x: clip;
+  }
+  .menu.hojicha { --menu-a: #f1e9de; --menu-b: #dcc4a5; }
+  .menu > .wrap { position: relative; z-index: 1; }
+
+  /* Big outlined "matcha" / "hojicha" behind the heading, like the titles on her menu boards */
+  .menu-mark { position: absolute; left: 0; right: 0; top: 34px; height: 1.1em; font: clamp(6rem, 19vw, 15rem)/1 "Gochi Hand", cursive; text-align: center; pointer-events: none; }
+  .menu-mark span {
+    position: absolute; inset: 0; color: transparent; -webkit-text-stroke: 1.5px var(--ink);
+    opacity: 0; transform: translateY(40px) rotate(-2deg); transition: opacity 1s var(--ease), transform 1.1s var(--ease);
+  }
+  .menu-mark span.on { opacity: .14; transform: none; }
+  .menu-mark .hoji { -webkit-text-stroke-color: var(--hoji); }
+  .menu-mark .hoji.on { opacity: .2; }
+
+  /* Tabs with a pill that slides to the chosen one (and turns roasted brown for hojicha) */
+  .tabs {
+    position: relative; display: flex; width: max-content; margin: 0 auto 32px; padding: 5px;
+    border: 2px solid var(--ink); border-radius: 999px; background: rgba(255, 255, 255, .55);
+    transition: border-color 1s var(--ease);
+  }
+  .tab {
+    position: relative; z-index: 1; font: 600 1.05rem "Fraunces", serif; color: var(--ink); cursor: pointer;
+    background: transparent; border: 0; border-radius: 999px; padding: 9px 26px; transition: color .6s var(--ease);
+  }
+  .tab[aria-selected="true"] { color: #fff; }
+  .tabs:not(.ready) .tab[aria-selected="true"] { background: var(--ink); } /* before the script adds the pill */
+  .tab-pill {
+    position: absolute; top: 5px; bottom: 5px; left: 0; width: 0; border-radius: 999px; background: var(--ink);
+    transition: translate .7s var(--ease), width .7s var(--ease), background-color 1s var(--ease);
+  }
+  .menu.hojicha .tabs { border-color: var(--hoji); }
+  .menu.hojicha .tab { color: var(--hoji); }
+  .menu.hojicha .tab[aria-selected="true"] { color: #fff; }
+  .menu.hojicha .tab-pill { background: var(--hoji); }
+
+  /* Card shuffle when switching tabs: old cards drop away, new ones float up one by one */
+  .menu-grid .item.leave, .extras .extra.leave {
+    opacity: 0; transform: translateY(14px) scale(.97);
+    transition: opacity .3s ease, transform .3s ease; transition-delay: var(--d, 0s);
+  }
+  .menu-grid .item.enter, .extras .extra.enter { opacity: 0; transform: translateY(28px) scale(.95) rotate(var(--r, 0deg)); transition: none; }
+  .menu-grid .item.entering, .extras .extra.entering { transition: opacity .7s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0s); }
+  .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .item { position: relative; background: var(--card); border-radius: var(--radius); overflow: hidden; transition: transform .7s var(--ease), box-shadow .7s var(--ease); }
+  .item:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(52, 82, 154, .14); }
+  .item > img { width: 100%; aspect-ratio: 6 / 5; object-fit: contain; background: var(--card); padding: 10px 10px 0; }
+  .item .note { position: absolute; top: 12px; right: 16px; margin: 0; transform: rotate(-4deg); }
+  .item-body { padding: 8px 20px 22px; }
+  .item-body h3 { font-size: 1.3rem; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .item-body h3 .icons { color: var(--star); font-size: 1rem; margin-right: 4px; }
+  .item-body h3 .icons .fave { color: var(--peri); }
+  .price { font-family: "DM Mono", monospace; color: var(--ink); background: #e6ecfa; padding: 2px 10px; border-radius: 999px; font-size: .95rem; white-space: nowrap; }
+  .item-body p { margin: 10px 0 0; color: var(--muted); line-height: 1.7; }
+
+  .extras { display: grid; grid-template-columns: minmax(0, 420px); justify-content: center; gap: 16px; margin-top: 32px; text-align: center; }
+  .extra { border: 2px dotted #b9b3a3; border-radius: 22px; padding: 18px 20px; background: var(--paper); }
+  .extra .label { display: inline-block; background: #fff; border: 1.5px solid var(--ink); color: var(--ink); border-radius: 999px; padding: 2px 12px; font-weight: 700; font-size: .8rem; margin-bottom: 8px; }
+  .extra h4 { margin: 0 0 4px; font-family: "Fraunces", serif; font-size: 1.2rem; color: var(--ink); }
+  .extra p { margin: 0; color: var(--muted); font-size: .95rem; }
+  .legend { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; margin-top: 22px; color: var(--muted); }
+  .legend b { color: var(--star); } .legend b.fave { color: var(--peri); }
+
+  /* How to order */
+  .order {
+    color: #eef3e6;
+    background: linear-gradient(180deg, #6f8f5f 0%, #3b6b36 40%, var(--matcha-deep) 100%);
+  }
+  .order .wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+  .order h2 { color: #fff; font-size: clamp(2rem, 4.5vw, 2.8rem); }
+  .order .hand { color: #f3e3b4; }
+  .steps { list-style: none; margin: 28px 0 32px; padding: 0; display: grid; gap: 14px; }
+  .steps li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 16px; padding: 16px 18px; }
+  .steps .num { width: 44px; height: 44px; border-radius: 50%; background: var(--peri); color: #fff; display: grid; place-items: center; font: 500 1.1rem "DM Mono", monospace; }
+  .steps h3 { color: #fff; font-size: 1.2rem; margin-bottom: 2px; }
+  .steps p { margin: 0; opacity: .85; }
+  .order .btn { background: #fff; color: var(--matcha-deep); }
+  .order .btn:hover { background: #f3e3b4; }
+  .order .frame { border-radius: var(--radius); width: 100%; max-width: 420px; justify-self: center; box-shadow: 0 24px 50px rgba(0,0,0,.3); }
+  .order .frame img { width: 100%; }
+
+  /* Reviews */
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .reviews-grid a { display: block; border-radius: var(--radius); overflow: hidden; box-shadow: 0 10px 30px rgba(43, 50, 66, .1); transition: transform .7s var(--ease); }
+  .reviews-grid a:hover { transform: translateY(-6px); }
+  .reviews-grid img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+
+  /* Gallery */
+  .gallery { background: var(--cream); }
+
+  /* ===== Scroll animations ===== */
+  /* Reveal on scroll: things fade up into place when you scroll to them (the script adds .reveal / .in) */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2, .7, .2, 1); transition-delay: var(--delay, 0s); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Marquee: an endless sideways-scrolling ribbon. The script copies the content once so it loops seamlessly. */
+  .marquee { overflow: hidden; }
+  .marquee-track { display: flex; width: max-content; }
+  .marquee.ready .marquee-track { animation: marquee var(--speed, 40s) linear infinite; }
+  .marquee.ready .marquee-track.reverse { animation-direction: reverse; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  .ribbon-wrap { overflow-x: clip; position: relative; z-index: 2; margin-block: -24px; padding-block: 10px; }
+  .ribbon { background: var(--ink); color: #fff; padding-block: 14px; transform: rotate(-1.2deg); margin-inline: -20px; box-shadow: 0 10px 24px rgba(52, 82, 154, .25); }
+  .ribbon span { font-family: "Gochi Hand", cursive; font-size: 1.45rem; padding-inline: 22px; white-space: nowrap; }
+  .ribbon span::after { content: "✿"; color: var(--peri); margin-left: 44px; }
+
+  .photo-strip { --speed: 60s; margin-top: 14px; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+  .photo-strip img { width: 250px; height: 250px; object-fit: cover; border-radius: 16px; margin-right: 14px; flex: none; }
+
+  /* Gentle wobble for the "whisking today!" sticker */
+  @keyframes wobble { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(-2deg) scale(1.04); } }
+  .hero-photo .sticker { animation: wobble 5s ease-in-out infinite; }
+
+  /* ===== Luxury motion ===== */
+  /* Photo frames: the photo sits slightly enlarged inside its frame, so it can drift as you scroll
+     (parallax, set by the script) and slowly zoom on hover without ever showing an edge */
+  .frame { overflow: hidden; position: relative; isolation: isolate; }
+  .frame img { display: block; scale: 1.12; transition: scale 1.6s var(--ease); will-change: translate; }
+  .frame:hover img { scale: 1.19; }
+  /* Slow zoom on hover for the menu cups, reviews and gallery photos */
+  .item > img, .reviews-grid img, .photo-strip img { transition: scale 1.2s var(--ease); }
+  .item:hover > img { scale: 1.06; }
+  .reviews-grid a:hover img, .photo-strip img:hover { scale: 1.04; }
+
+  /* Respect people who turn off animations in their phone/computer settings */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .marquee.ready .marquee-track, .hero-photo .sticker { animation: none; }
+    .frame img { scale: 1.12 !important; transition: none; }
+    .item > img, .reviews-grid img, .photo-strip img { scale: 1 !important; transition: none; }
+    .mobile-menu, .mobile-menu ul a, .mobile-menu .foot > * { transition: none !important; transform: none; }
+    .menu, .menu-mark span, .tab-pill, .odo-strip.go { transition: none !important; }
+    .open-badge .dot, .lightbox::backdrop, .lightbox[open] .lb-figure { animation: none !important; }
+    .lb-figure img { transition: none; }
+  }
+
+  /* Footer */
+  footer { background: var(--ink); color: #dfe6f7; padding-block: 56px 32px; }
+  footer .wrap { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
+  footer .brand { color: #fff; margin-bottom: 10px; }
+  footer h3 { color: #fff; font-size: 1.1rem; margin-bottom: 10px; }
+  footer ul { list-style: none; margin: 0; padding: 0; }
+  footer li { margin-bottom: 6px; }
+  footer a { color: #dfe6f7; text-decoration: none; }
+  footer a:hover { color: #fff; text-decoration: underline; }
+  .copy { text-align: center; margin-top: 36px; font-size: .85rem; opacity: .7; grid-column: 1 / -1; }
+
+  /* ===== Drink builder ===== */
+  .builder .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 36px; align-items: start; }
+  .panel { background: #fff; border-radius: var(--radius); padding: 28px; box-shadow: 0 14px 40px rgba(52, 82, 154, .08); }
+  .panel fieldset { border: 0; padding: 0; margin: 0 0 24px; min-width: 0; }
+  .panel legend { font: 600 1.15rem "Fraunces", serif; color: var(--ink); margin-bottom: 10px; padding: 0; }
+  .panel legend small { font: 400 .85rem "DM Sans", sans-serif; color: var(--muted); margin-left: 6px; }
+  .picks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .picks .group { grid-column: 1 / -1; margin: 8px 0 0; color: var(--muted); }
+  .opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .chip span {
+    display: flex; justify-content: space-between; gap: 10px; height: 100%;
+    border: 1.5px solid #e2ddd0; border-radius: 12px; padding: 10px 14px; cursor: pointer;
+    transition: border-color .4s var(--ease), background .4s var(--ease), color .4s var(--ease);
+  }
+  .chip span em { font: normal .85rem "DM Mono", monospace; color: var(--muted); white-space: nowrap; }
+  .chip:hover span { border-color: var(--peri); }
+  .chip input:checked + span { border-color: var(--ink); background: #eef2fc; color: var(--ink); font-weight: 700; }
+  .chip input:checked + span em { color: var(--ink); }
+  .chip input:focus-visible + span { outline: 2px solid var(--peri); outline-offset: 2px; }
+  .chip input:disabled + span { opacity: .4; cursor: not-allowed; }
+  .hint { color: var(--muted); font-size: .88rem; margin: 8px 0 0; }
+  .add-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px dashed #d9d3c3; padding-top: 22px; }
+  .qty { display: inline-flex; align-items: center; border: 1.5px solid #e2ddd0; border-radius: 999px; }
+  .qty button { width: 42px; height: 42px; border: 0; background: none; font-size: 1.25rem; color: var(--ink); cursor: pointer; border-radius: 50%; }
+  .qty button:hover { background: #eef2fc; }
+  .qty output { min-width: 28px; text-align: center; font-weight: 700; }
+  .line-total { font: 500 1.25rem "DM Mono", monospace; color: var(--ink); }
+  .add-row .btn { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+
+  /* The receipt: typewriter text on paper with a torn zigzag bottom */
+  .receipt-wrap { position: sticky; top: 90px; filter: drop-shadow(0 14px 24px rgba(43, 50, 66, .12)); }
+  .receipt {
+    --zz: 14px;
+    background: #fffefa; font-family: "DM Mono", monospace; font-size: .9rem; color: var(--text);
+    padding: 26px 24px calc(26px + var(--zz)); border-radius: 8px 8px 0 0;
+    mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--zz) 100%;
+  }
+  .receipt .head { text-align: center; border-bottom: 1.5px dashed #cfc8b6; padding-bottom: 14px; margin-bottom: 14px; }
+  .receipt .head strong { display: block; font: 600 1.4rem "Fraunces", serif; color: var(--ink); }
+  .receipt .head span { text-transform: uppercase; letter-spacing: .15em; font-size: .72rem; color: var(--muted); }
+  .receipt ul { list-style: none; margin: 0; padding: 0; min-height: 60px; }
+  .receipt li { display: grid; grid-template-columns: 1fr auto auto; gap: 4px 10px; align-items: start; padding: 8px 0; animation: slip-in .5s var(--ease); }
+  .receipt li small { grid-column: 1; color: var(--muted); font-size: .78rem; }
+  .receipt li .x { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 0 2px; line-height: 1; }
+  .receipt li .x:hover { color: #b3413b; }
+  .receipt .empty { color: var(--muted); text-align: center; padding: 18px 0; font-family: "Gochi Hand", cursive; font-size: 1.15rem; }
+  .receipt .total { display: flex; justify-content: space-between; border-top: 1.5px dashed #cfc8b6; margin-top: 10px; padding-top: 12px; font-size: 1.1rem; font-weight: 500; color: var(--ink); }
+  .receipt .fee-note { margin: 4px 0 0; font-size: .78rem; color: var(--muted); text-align: right; }
+  .receipt .how { display: flex; gap: 8px; margin: 16px 0 10px; }
+  .receipt .how .chip { flex: 1; }
+  .receipt .how .chip span { justify-content: center; font-family: "DM Sans", sans-serif; }
+  .receipt textarea {
+    width: 100%; min-height: 64px; resize: vertical; border: 1.5px solid #e2ddd0; border-radius: 12px; padding: 10px 12px;
+    font: .9rem "DM Sans", sans-serif; color: var(--text); background: #fff;
+  }
+  .receipt textarea:focus { outline: 2px solid var(--peri); border-color: transparent; }
+  .receipt .send { width: 100%; justify-content: center; margin-top: 14px; }
+  .receipt .send[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+  .receipt .fine { font-family: "DM Sans", sans-serif; font-size: .8rem; color: var(--muted); text-align: center; margin: 10px 0 0; }
+  .receipt .status { font-family: "DM Sans", sans-serif; font-size: .9rem; color: var(--matcha); text-align: center; margin: 8px 0 0; min-height: 1.4em; }
+  .receipt .clear { display: block; margin: 6px auto 0; border: 0; background: none; color: var(--muted); font: .8rem "DM Sans", sans-serif; text-decoration: underline; cursor: pointer; }
+  @keyframes slip-in { from { opacity: 0; transform: translateY(-8px); } }
+  @keyframes bump { 50% { transform: scale(1.06); } }
+  .receipt-wrap.bump { animation: bump .45s var(--ease); }
+
+  /* Odometer prices: each digit is a strip 0–9 that rolls to the new number */
+  .odo-wrap { display: inline-flex; }
+  .odo, .odo-sym { display: inline-block; height: 1.25em; line-height: 1.25em; }
+  .odo { overflow: hidden; }
+  .odo-strip { display: flex; flex-direction: column; transform: translateY(calc(var(--from) * -1.25em)); }
+  .odo-strip.go { transform: translateY(calc(var(--to) * -1.25em)); transition: transform .9s var(--ease) var(--d, 0s); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* The little cup that flies into the receipt */
+  .fly {
+    position: fixed; left: 0; top: 0; z-index: 30; width: 64px; height: 64px; border-radius: 50%;
+    object-fit: cover; object-position: 60% 50%; background: var(--card); border: 3px solid #fff;
+    box-shadow: 0 12px 26px rgba(52, 82, 154, .3); pointer-events: none;
+  }
+
+  /* "+ order this" button added to each menu card */
+  .order-this {
+    margin-top: 14px; border: 1.5px solid var(--ink); color: var(--ink); background: transparent; border-radius: 999px;
+    padding: 6px 14px; font: 700 .85rem "DM Sans", sans-serif; cursor: pointer; transition: background .4s var(--ease), color .4s var(--ease);
+  }
+  .order-this:hover { background: var(--ink); color: #fff; }
+
+  /* ===== Phone menu (☰ button + full-screen menu) ===== */
+  .menu-toggle { display: none; }
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 9; /* just under the sticky header, so the ☰/✕ button stays tappable */
+    display: flex; flex-direction: column; padding: 96px 24px 32px;
+    background: var(--paper); overflow-y: auto;
+    opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s linear .5s;
+  }
+  .mobile-menu.open { opacity: 1; visibility: visible; transition: opacity .5s var(--ease); }
+  .mobile-menu ul { list-style: none; margin: 0; padding: 0; }
+  .mobile-menu li { border-bottom: 1px solid #e7e3d8; }
+  .mobile-menu ul a {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 16px 0;
+    font: 600 clamp(1.7rem, 8vw, 2.2rem) "Fraunces", serif; color: var(--ink); text-decoration: none;
+    opacity: 0; transform: translateY(18px);
+    transition: opacity .6s var(--ease), transform .6s var(--ease);
+  }
+  .mobile-menu.open ul a { opacity: 1; transform: none; transition-delay: calc(var(--i) * 60ms + 120ms); }
+  .mobile-menu ul a small { font: .8rem "DM Mono", monospace; color: var(--muted); }
+  .mobile-menu .foot { margin-top: auto; padding-top: 32px; display: grid; gap: 8px; }
+  .mobile-menu .foot > * { opacity: 0; transform: translateY(14px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+  .mobile-menu.open .foot > * { opacity: 1; transform: none; transition-delay: calc(var(--i) * 60ms + 120ms); }
+  .mobile-menu .label { margin: 0 0 4px; color: var(--muted); }
+  .mobile-menu .tag { margin: 14px 0 0; text-align: center; font-size: 1.15rem; }
+
+  /* Contact cards: icon, name + short description, and an arrow that nudges when tapped */
+  .contact {
+    display: grid; grid-template-columns: 44px 1fr 20px; gap: 14px; align-items: center;
+    padding: 12px 16px 12px 12px; border-radius: 18px; text-decoration: none;
+    background: #fff; border: 1px solid #ebe6da; color: var(--text);
+    transition: transform .5s var(--ease), box-shadow .5s var(--ease);
+  }
+  .contact:hover, .contact:active { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(52, 82, 154, .12); }
+  .contact .ic { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: #eef2fc; color: var(--ink); }
+  .contact svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .contact strong { display: block; font: 600 1.08rem "Fraunces", serif; color: var(--ink); line-height: 1.2; }
+  .contact small { display: block; color: var(--muted); font-size: .85rem; margin-top: 2px; }
+  .contact .arrow { width: 18px; height: 18px; color: var(--ink); transition: transform .5s var(--ease); }
+  .contact:hover .arrow, .contact:active .arrow { transform: translate(3px, -3px); }
+  .contact.primary { background: var(--ink); border-color: var(--ink); }
+  .contact.primary .ic { background: rgba(255, 255, 255, .16); color: #fff; }
+  .contact.primary strong, .contact.primary .arrow { color: #fff; }
+  .contact.primary small { color: rgba(255, 255, 255, .75); }
+  /* inside the phone menu: keep the fade-in, but let the hover/tap lift win once it's open */
+  .mobile-menu .foot > .contact { transition: opacity .6s var(--ease), transform .5s var(--ease), box-shadow .5s var(--ease); }
+  .mobile-menu.open .contact:hover, .mobile-menu.open .contact:active { transform: translateY(-2px); transition-delay: 0s; }
+  .menu-open .float-order { opacity: 0; pointer-events: none; }
+
+  /* ===== Live "open now" badge ===== */
+  .tags .open-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--muted); }
+  .open-badge .dot { width: 9px; height: 9px; border-radius: 50%; background: #a3a7ad; flex: none; }
+  .open-badge.is-open { color: #25693a; }
+  .open-badge.is-open .dot { background: #34a853; animation: pulse 2s infinite; }
+  .open-badge.is-soon { color: #8a5a00; }
+  .open-badge.is-soon .dot { background: #e0a526; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(52, 168, 83, .5); } 70% { box-shadow: 0 0 0 9px rgba(52, 168, 83, 0); } 100% { box-shadow: 0 0 0 0 rgba(52, 168, 83, 0); } }
+
+  /* ===== Delivery checker (in How to order) ===== */
+  .area-check { background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .15); border-radius: 18px; padding: 20px; margin: 0 0 28px; }
+  .area-check strong { font: 600 1.25rem "Fraunces", serif; color: #fff; }
+  .area-check .areas-note { margin: 4px 0 12px; opacity: .85; }
+  .area-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .area-chip {
+    border: 1px solid rgba(255, 255, 255, .4); background: transparent; color: #fff; border-radius: 999px;
+    padding: 6px 14px; font: 500 .9rem "DM Sans", sans-serif; cursor: pointer; transition: background .3s, color .3s;
+  }
+  .area-chip:hover, .area-chip.on { background: #fff; color: var(--matcha-deep); }
+  .area-check input { width: 100%; padding: 12px 18px; border: 0; border-radius: 999px; font: 1rem "DM Sans", sans-serif; color: var(--text); }
+  .area-check input:focus { outline: 3px solid var(--peri); }
+  .area-result { margin: 12px 0 0; min-height: 1.5em; font-weight: 500; }
+  .area-result.yes { color: #fff; }
+  .area-result.yes::before { content: "✓ "; color: #b9e3a0; font-weight: 700; }
+  .area-result a { color: #f3e3b4; font-weight: 700; white-space: nowrap; }
+
+  /* Delivery area picker inside the receipt (only shows for Delivery) */
+  .receipt .area { display: block; margin: 0 0 10px; font: .82rem "DM Sans", sans-serif; color: var(--muted); }
+  .receipt .area[hidden] { display: none; }
+  .receipt .area select {
+    display: block; width: 100%; margin-top: 4px; padding: 10px 12px; border: 1.5px solid #e2ddd0; border-radius: 12px;
+    font: .95rem "DM Sans", sans-serif; color: var(--text); background: #fff;
+  }
+
+  /* ===== Photo lightbox ===== */
+  .reviews-grid img, .photo-strip img { cursor: zoom-in; }
+  .lightbox { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; overflow: hidden; }
+  .lightbox::backdrop { background: rgba(18, 24, 38, .86); backdrop-filter: blur(6px); animation: lb-fade .4s ease; }
+  .lb-stage { width: 100%; height: 100%; display: grid; place-items: center; padding: 64px 16px 96px; }
+  .lightbox[open] .lb-figure { animation: lb-in .5s var(--ease); }
+  .lb-figure { margin: 0; display: grid; justify-items: center; gap: 12px; max-width: min(100%, 900px); }
+  .lb-figure img {
+    max-width: 100%; max-height: calc(100dvh - 190px); object-fit: contain; border-radius: 14px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .45); transition: opacity .25s ease, transform .4s var(--ease); touch-action: pan-y;
+  }
+  .lb-figure img.swap { opacity: 0; transform: translateX(var(--dir, 0px)) scale(.98); }
+  .lb-figure figcaption { color: #fff; text-align: center; max-width: 60ch; opacity: .9; }
+  .lb-count { font: .85rem "DM Mono", monospace; color: rgba(255, 255, 255, .7); }
+  .lb-btn {
+    position: fixed; width: 50px; height: 50px; border-radius: 50%; border: 0; cursor: pointer;
+    background: rgba(255, 255, 255, .14); color: #fff; display: grid; place-items: center; transition: background .3s;
+  }
+  .lb-btn:hover { background: rgba(255, 255, 255, .3); }
+  .lb-btn[hidden] { display: none; }
+  .lb-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .lb-close { top: calc(16px + env(safe-area-inset-top, 0px)); right: 16px; }
+  .lb-prev, .lb-next { top: 50%; translate: 0 -50%; }
+  .lb-prev { left: 16px; } .lb-next { right: 16px; }
+  @keyframes lb-in { from { opacity: 0; transform: scale(.94) translateY(12px); } }
+  @keyframes lb-fade { from { opacity: 0; } }
+  @media (max-width: 760px) {
+    .lb-prev, .lb-next { top: auto; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); translate: none; }
+    .lb-prev { left: calc(50% - 62px); } .lb-next { right: calc(50% - 62px); }
+  }
+
+  /* Floating order button (phones only) */
+  .float-order { display: none; }
+
+  /* ===== Tablet ===== */
+  @media (max-width: 960px) {
+    .nav ul { gap: 18px; font-size: .95rem; }
+    .menu-grid { grid-template-columns: repeat(2, 1fr); }
+    .builder .wrap { grid-template-columns: 1fr; }
+    .receipt-wrap { position: static; max-width: 460px; width: 100%; justify-self: center; }
+  }
+
+  /* ===== Phone ===== */
+  @media (max-width: 760px) {
+    .nav ul { display: none; }
+    .nav { gap: 10px; }
+    .nav > .btn { margin-left: auto; }
+    .menu-toggle {
+      display: inline-block; position: relative; flex: none; width: 46px; height: 46px; border-radius: 50%;
+      border: 1.5px solid var(--ink); background: transparent; cursor: pointer;
+    }
+    .menu-toggle span {
+      position: absolute; left: 13px; right: 13px; height: 2px; border-radius: 2px; background: var(--ink);
+      transition: transform .5s var(--ease), top .5s var(--ease);
+    }
+    .menu-toggle span:first-child { top: 18px; }
+    .menu-toggle span:last-child { top: 26px; }
+    .menu-toggle[aria-expanded="true"] span { top: 22px; }
+    .menu-toggle[aria-expanded="true"] span:first-child { transform: rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span:last-child { transform: rotate(-45deg); }
+    .hero .wrap, .about .wrap, .order .wrap, footer .wrap { grid-template-columns: 1fr; }
+    .hero { padding-top: 32px; }
+    .hero-photo { max-width: 340px; }
+    .hero-photo .sticker { left: -6px; width: 88px; height: 88px; font-size: 1rem; }
+    .reviews-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+    .photo-strip img { width: 170px; height: 170px; margin-right: 10px; }
+    .ribbon span { font-size: 1.2rem; }
+    .panel { padding: 20px; }
+    .picks { grid-template-columns: 1fr; }
+    section { padding-block: 60px; }
+    .float-order {
+      display: flex; justify-content: center;
+      position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 20;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      transition: opacity .5s var(--ease), transform .5s var(--ease);
+    }
+    .float-order.away { opacity: 0; transform: translateY(24px); pointer-events: none; }
+    footer { padding-bottom: 100px; }
+  }
+  /* Small phones: a more compact header so the name stays on one line */
+  @media (max-width: 400px) {
+    .nav .brand { font-size: 1.12rem; gap: 8px; white-space: nowrap; }
+    .nav .brand img { width: 36px; height: 36px; }
+    .nav > .btn { padding: 10px 16px; font-size: .95rem; }
+  }
+  @media (max-width: 340px) {
+    .nav > .btn { display: none; }
+    .menu-toggle { margin-left: auto; }
+  }
+  @media (max-width: 520px) {
+    .menu-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand"><img src="images/logo.jpg" alt=""> mirou matcha</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#build">Build your order</a></li>
+      <li><a href="#order">How to order</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+    </ul>
+    <a class="btn" href="#build">Order</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- PHONE MENU: opens full-screen when the ☰ button is tapped -->
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu">
+  <ul>
+    <li><a href="#about" style="--i:0"><span>About</span><small>01</small></a></li>
+    <li><a href="#menu" style="--i:1"><span>Menu</span><small>02</small></a></li>
+    <li><a href="#build" style="--i:2"><span>Build your order</span><small>03</small></a></li>
+    <li><a href="#order" style="--i:3"><span>How to order</span><small>04</small></a></li>
+    <li><a href="#reviews" style="--i:4"><span>Reviews</span><small>05</small></a></li>
+  </ul>
+  <div class="foot">
+    <p class="mono label" style="--i:5">get in touch</p>
+    <a class="contact primary" href="https://m.me/mirou.matchaph" target="_blank" rel="noopener" style="--i:6">
+      <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c-5 0-9 3.7-9 8.3 0 2.5 1.2 4.7 3.1 6.2v3.1l3-1.7c.9.3 1.9.4 2.9.4 5 0 9-3.7 9-8.3S17 3.2 12 3.2z"/><path d="m7.6 13.4 3-3.2 2.2 2.1 3.6-2.9-3 3.2-2.2-2.1z"/></svg></span>
+      <span><strong>Messenger</strong><small>orders &amp; quick questions</small></span>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    </a>
+    <a class="contact" href="https://www.facebook.com/mirou.matchaph" target="_blank" rel="noopener" style="--i:7">
+      <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8.2H17V4.8h-2.8c-2.6 0-4 1.6-4 4V11H8v3.3h2.2V21h3.5v-6.7h2.6l.5-3.3h-3.1V9.3c0-.7.3-1.1.8-1.1z"/></svg></span>
+      <span><strong>Facebook</strong><small>menus, promos &amp; updates</small></span>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    </a>
+    <a class="contact" href="https://www.instagram.com/mirou.matcha/" target="_blank" rel="noopener" style="--i:8">
+      <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".5"/></svg></span>
+      <span><strong>Instagram</strong><small>@mirou.matcha</small></span>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    </a>
+    <a class="contact" href="mailto:miroumatcha@gmail.com" style="--i:9">
+      <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></span>
+      <span><strong>Email</strong><small>miroumatcha@gmail.com</small></span>
+      <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    </a>
+    <p class="hand tag" style="--i:10">whisked by hand in bay, laguna ✿</p>
+  </div>
+</nav>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero grain">
+    <div class="wrap">
+      <div>
+        <p class="hand">homebased matcha slow bar ✿ bay, laguna</p>
+        <h1>good things take time.</h1>
+        <p class="lead">Matcha and hojicha, whisked by hand and made right before it's yours. Pick up, or have it delivered by our in-house rider.</p>
+        <div class="actions">
+          <a class="btn" href="#build">Build your order</a>
+          <a class="btn ghost" href="#menu">See the menu</a>
+        </div>
+        <ul class="tags">
+          <li class="open-badge" id="open-badge"><span class="dot"></span><span id="open-text">Open daily · 12nn–9pm</span></li>
+          <li>📍 Bay, Laguna</li>
+          <li>🛵 In-house delivery</li>
+          <li>🏠 Pick up</li>
+        </ul>
+      </div>
+      <div class="hero-photo">
+        <div class="frame"><img src="images/hero.jpg" alt="A hand holding an iced matcha latte with a mirou matcha label"></div>
+        <div class="sticker">whisking<br>today!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCROLLING RIBBON -->
+  <div class="ribbon-wrap" aria-hidden="true">
+    <div class="ribbon marquee" style="--speed: 35s">
+      <div class="marquee-track">
+        <span>whisked by hand</span>
+        <span>made right before it's yours</span>
+        <span>matcha &amp; hojicha</span>
+        <span>pick up &amp; delivery</span>
+        <span>bay, laguna</span>
+        <span>good things take time</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="frame"><img src="images/about.jpg" alt="Freshly whisked matcha in a bowl with a bamboo whisk"></div>
+      <div>
+        <p class="hand">hello, mirou bestie</p>
+        <h2>a little slow bar, run from home</h2>
+        <blockquote class="mono">
+          mirou matcha is a slow bar. every cup is whisked by hand, made right before it's yours.
+          thank you for your patience while we take the time to get there.
+        </blockquote>
+        <p>
+          We're a small homebased matcha bar in Bay, Laguna. We make matcha and hojicha drinks in small batches,
+          with homemade sauces and creams. Message us to order, then pick it up or have it delivered.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu grain" id="menu">
+    <div class="menu-mark" aria-hidden="true"><span class="on" data-type="matcha">matcha</span><span class="hoji" data-type="hojicha">hojicha</span></div>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="hand">the menu</p>
+        <h2>what we're whisking</h2>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="panel-matcha" id="tab-matcha">matcha</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-hojicha" id="tab-hojicha">hojicha</button>
+      </div>
+
+      <!-- MATCHA -->
+      <div id="panel-matcha" role="tabpanel" aria-labelledby="tab-matcha">
+        <div class="menu-grid">
+          <article class="item">
+            <img src="images/menu-matcha-latte.jpg" alt="Matcha latte" loading="lazy">
+            <div class="item-body">
+              <h3>Matcha latte <span class="price">₱160</span></h3>
+              <p class="mono">matcha, milk, and blue agave</p>
+            </div>
+          </article>
+          <article class="item">
+            <img src="images/menu-seasalt-matcha.jpg" alt="Seasalt matcha" loading="lazy">
+            <div class="item-body">
+              <h3><span><span class="icons"><span class="fave">✽</span></span>Seasalt Matcha</span> <span class="price">₱170</span></h3>
+              <p class="mono">matcha latte topped with seasalt cream</p>
+            </div>
+          </article>
+          <article class="item">
+            <img src="images/menu-earl-grey-latte.jpg" alt="Earl grey matcha latte" loading="lazy">
+            <div class="item-body">
+              <h3>Earl Grey latte <span class="price">₱200</span></h3>
+              <p class="mono">matcha latte with earl grey syrup</p>
+            </div>
+          </article>
+          <article class="item">
+            <p class="hand note">must-try</p>
+            <img src="images/menu-toasted-milk-cereal.jpg" alt="Toasted milk cereal matcha topped with cereal" loading="lazy">
+            <div class="item-body">
+              <h3><span><span class="icons">★<span class="fave">✽</span></span>Toasted Milk Cereal</span> <span class="price">₱210</span></h3>
+              <p class="mono">matcha latte infused with toasted milk + signature cream and cereal toppings</p>
+            </div>
+          </article>
+          <article class="item">
+            <p class="hand note">best seller</p>
+            <img src="images/menu-vanilla-crunch.jpg" alt="Vanilla crunch matcha topped with rice crispies" loading="lazy">
+            <div class="item-body">
+              <h3><span><span class="icons">★</span>Vanilla Crunch</span> <span class="price">₱195</span></h3>
+              <p class="mono">vanilla bean matcha latte topped with seasalt cream and rice crispies</p>
+            </div>
+          </article>
+          <article class="item">
+            <p class="hand note">new!</p>
+            <img src="images/menu-caramiso-latte.jpg" alt="Caramiso matcha latte with caramel-miso cream" loading="lazy">
+            <div class="item-body">
+              <h3><span><span class="icons">★</span>Caramiso latte</span> <span class="price">₱200</span></h3>
+              <p class="mono">matcha latte with our homemade caramel-miso sauce + caramiso cream top</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="extras">
+          <div class="extra">
+            <span class="label">+₱10</span>
+            <h4>Sub oatmilk</h4>
+            <p>Swap in oatmilk on any drink.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOJICHA -->
+      <div id="panel-hojicha" role="tabpanel" aria-labelledby="tab-hojicha" hidden>
+        <div class="menu-grid">
+          <article class="item">
+            <img src="images/menu-hojicha-latte.jpg" alt="Hojicha latte" loading="lazy">
+            <div class="item-body">
+              <h3>Hojicha latte <span class="price">₱150</span></h3>
+              <p class="mono">dark roast hojicha, milk, and blue agave</p>
+            </div>
+          </article>
+          <article class="item">
+            <p class="hand note">best seller</p>
+            <img src="images/menu-seasalt-hojicha.jpg" alt="Seasalt hojicha" loading="lazy">
+            <div class="item-body">
+              <h3><span><span class="icons"><span class="fave">✽</span></span>Seasalt Hojicha</span> <span class="price">₱160</span></h3>
+              <p class="mono">hojicha latte with seasalt cream top</p>
+            </div>
+          </article>
+          <article class="item">
+            <p class="hand note">must-try</p>
+            <img src="images/menu-horjicha.jpg" alt="Hor-jicha, hojicha latte with horchata syrup" loading="lazy">
+            <div class="item-body">
+              <h3><span><span class="icons">★</span>Hor-jicha</span> <span class="price">₱200</span></h3>
+              <p class="mono">hojicha latte with horchata syrup</p>
+            </div>
+          </article>
+          <article class="item">
+            <p class="hand note">new!</p>
+            <img src="images/menu-vanilla-crunch-hojicha.jpg" alt="Vanilla crunch hojicha topped with rice crispies" loading="lazy">
+            <div class="item-body">
+              <h3><span><span class="icons">★</span>Vanilla Crunch Hojicha</span> <span class="price">₱195</span></h3>
+              <p class="mono">vanilla bean hojicha latte topped with seasalt cream and rice crispies</p>
+            </div>
+          </article>
+        </div>
+        <div class="extras">
+          <div class="extra">
+            <span class="label">+₱10</span>
+            <h4>Sub oatmilk</h4>
+            <p>Swap in oatmilk on any drink.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <span><b>★</b> signature drink</span>
+        <span><b class="fave">✽</b> house fave</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRINK BUILDER: the script fills in the drink choices and the receipt -->
+  <section class="builder" id="build">
+    <div class="wrap">
+      <div>
+        <div class="section-head" style="text-align:left">
+          <p class="hand">make it yours</p>
+          <h2>build your order</h2>
+          <p class="sub" style="margin-left:0">Pick your drinks, then send the order to us on Messenger in one tap.</p>
+        </div>
+        <form class="panel" id="builder-form">
+          <fieldset>
+            <legend>1. Pick a drink</legend>
+            <div class="picks" id="drink-picks"></div>
+          </fieldset>
+          <fieldset>
+            <legend>2. Milk</legend>
+            <div class="opts">
+              <label class="chip"><input type="radio" name="milk" value="regular" checked><span>Regular milk</span></label>
+              <label class="chip"><input type="radio" name="milk" value="oatmilk"><span>Oatmilk <em>+₱10</em></span></label>
+            </div>
+          </fieldset>
+          <div class="add-row">
+            <div class="qty" aria-label="How many">
+              <button type="button" data-step="-1" aria-label="One less">−</button>
+              <output id="qty">1</output>
+              <button type="button" data-step="1" aria-label="One more">+</button>
+            </div>
+            <span class="line-total" id="line-total">₱0</span>
+            <button class="btn" type="submit">+ Add to order</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="receipt-wrap" id="receipt-wrap">
+        <div class="receipt" aria-live="polite">
+          <div class="head"><strong>mirou matcha</strong><span>order slip</span></div>
+          <ul id="order-lines"></ul>
+          <div class="total"><span>TOTAL</span><span id="order-total">₱0</span></div>
+          <p class="fee-note" id="fee-note" hidden>+ delivery fee, which depends on your location. We'll settle it with you on Messenger.</p>
+          <div class="how" role="radiogroup" aria-label="Pick up or delivery">
+            <label class="chip"><input type="radio" name="how" value="Pick up" checked><span>Pick up</span></label>
+            <label class="chip"><input type="radio" name="how" value="Delivery"><span>Delivery</span></label>
+          </div>
+          <label class="area" id="area-field" hidden>Delivery area
+            <select id="order-area"><option value="">Choose your area…</option></select>
+          </label>
+          <textarea id="order-note" placeholder="Notes: preferred time, address or landmark, less ice…" aria-label="Notes for your order"></textarea>
+          <a class="btn send" id="send-order" href="https://m.me/mirou.matchaph" target="_blank" rel="noopener" aria-disabled="true">Copy order &amp; open Messenger</a>
+          <p class="status" id="order-status"></p>
+          <p class="fine">Your order gets copied, so just paste it in the chat. We'll confirm your order there.</p>
+          <button class="clear" type="button" id="clear-order" hidden>clear order</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO ORDER -->
+  <section class="order grain" id="order">
+    <div class="wrap">
+      <div>
+        <p class="hand">easy peasy</p>
+        <h2>how to order</h2>
+        <ol class="steps">
+          <li>
+            <span class="num">1</span>
+            <div>
+              <h3>Build it &amp; message us</h3>
+              <p>Put your order together in the <a href="#build" style="color:#fff">order builder</a>, then send it to us on Messenger. You can also just message us directly.</p>
+            </div>
+          </li>
+          <li>
+            <span class="num">2</span>
+            <div>
+              <h3>Pick up or delivery</h3>
+              <p>Grab it from us in Bay, Laguna, or have it brought to you by our in-house delivery around Bay, Calamba, Los Baños, Cabuyao and Victoria.</p>
+            </div>
+          </li>
+        </ol>
+        <!-- Delivery checker: the script fills in the town buttons from the AREAS list -->
+        <div class="area-check">
+          <label for="area-input"><strong>Do we deliver to you?</strong></label>
+          <p class="areas-note">We deliver around Bay. Tap your town or type it in:</p>
+          <div class="area-chips" id="area-chips"></div>
+          <input id="area-input" type="text" placeholder="Type your town, e.g. Calamba" autocomplete="off">
+          <p class="area-result" id="area-result" aria-live="polite"></p>
+        </div>
+        <a class="btn" href="https://m.me/mirou.matchaph" target="_blank" rel="noopener">💬 Order on Messenger</a>
+      </div>
+      <div class="frame"><img src="images/delivery.jpg" alt="In-house delivery now available. Message us for orders." loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="hand">kind words</p>
+        <h2>from our mirou besties</h2>
+        <p class="sub">Real messages from people who've ordered. Tap a photo to read it bigger.</p>
+      </div>
+      <div class="reviews-grid">
+        <a href="images/review-1.jpg" target="_blank"><img src="images/review-1.jpg" alt="Customer messages praising the caramiso, toasted milk cereal and seasalt matcha" loading="lazy"></a>
+        <a href="images/review-2.jpg" target="_blank"><img src="images/review-2.jpg" alt="Customer messages saying the drinks are perfectly balanced" loading="lazy"></a>
+        <a href="images/review-3.jpg" target="_blank"><img src="images/review-3.jpg" alt="Vanilla crunch matcha with customer comments around it" loading="lazy"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery grain" id="gallery">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="hand">from the slow bar</p>
+        <h2>a few of our cups</h2>
+      </div>
+    </div>
+    <!-- Two photo strips gliding in opposite directions (hover to pause) -->
+    <div class="photo-strip marquee">
+      <div class="marquee-track">
+        <img src="images/gallery-1.jpg" alt="Seasalt matcha on a wooden board">
+        <img src="images/gallery-2.jpg" alt="Vanilla crunch matcha next to a whisk holder">
+        <img src="images/gallery-3.jpg" alt="Toasted milk cereal matcha next to a laptop">
+        <img src="images/gallery-4.jpg" alt="Close-up of seasalt cream on matcha">
+        <img src="images/gallery-5.jpg" alt="Matcha drink on a tray with glasses">
+        <img src="images/gallery-6.jpg" alt="Vanilla crunch matcha in a cup carrier">
+        <img src="images/gallery-7.jpg" alt="Freshly whisked matcha: good things take time">
+        <img src="images/gallery-8.jpg" alt="Two matcha lattes in a cup carrier">
+      </div>
+    </div>
+    <div class="photo-strip marquee" aria-hidden="true">
+      <div class="marquee-track reverse">
+        <img src="images/gallery-5.jpg" alt="">
+        <img src="images/gallery-6.jpg" alt="">
+        <img src="images/gallery-7.jpg" alt="">
+        <img src="images/gallery-8.jpg" alt="">
+        <img src="images/gallery-1.jpg" alt="">
+        <img src="images/gallery-2.jpg" alt="">
+        <img src="images/gallery-3.jpg" alt="">
+        <img src="images/gallery-4.jpg" alt="">
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div>
+      <a href="#top" class="brand"><img src="images/logo.jpg" alt=""> mirou matcha</a>
+      <p>homebased matcha slow bar<br>Bay, Laguna · pick up and delivery only<br>Open daily · 12nn–9pm</p>
+    </div>
+    <div>
+      <h3>Order &amp; contact</h3>
+      <ul>
+        <li><a href="https://m.me/mirou.matchaph" target="_blank" rel="noopener">💬 Messenger</a></li>
+        <li><a href="mailto:miroumatcha@gmail.com">✉️ miroumatcha@gmail.com</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Follow</h3>
+      <ul>
+        <li><a href="https://www.facebook.com/mirou.matchaph" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="https://www.instagram.com/mirou.matcha/" target="_blank" rel="noopener">Instagram · @mirou.matcha</a></li>
+      </ul>
+    </div>
+    <p class="copy">© 2026 mirou matcha</p>
+  </div>
+</footer>
+
+<a class="btn float-order" href="#build">Build your order</a>
+
+<!-- PHOTO LIGHTBOX: review and gallery photos open here, big, without leaving the page -->
+<dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+  <div class="lb-stage">
+    <figure class="lb-figure">
+      <img id="lb-img" alt="">
+      <figcaption><span class="lb-count" id="lb-count"></span></figcaption>
+    </figure>
+  </div>
+  <button class="lb-btn lb-close" id="lb-close" type="button" aria-label="Close photo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+  <button class="lb-btn lb-prev" id="lb-prev" type="button" aria-label="Previous photo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <button class="lb-btn lb-next" id="lb-next" type="button" aria-label="Next photo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+</dialog>
+
+<!-- Lenis: the library behind "buttery" smooth scrolling (turns itself off for people who disable animations) -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script>
+  // Smooth scrolling. The menu links glide to their section, stopping just below the sticky header.
+  const lenis = window.Lenis ? new Lenis({ autoRaf: true, lerp: 0.085, anchors: { offset: -70 }, stopInertiaOnNavigate: true }) : null;
+  // true for people who turned off animations in their device settings; every effect below checks this
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Phone menu: the ☰ button opens a full-screen menu; tapping a link closes it and glides to that section
+  const toggle = document.querySelector(".menu-toggle");
+  const phoneMenu = document.getElementById("mobile-menu");
+  function setMenu(open) {
+    phoneMenu.classList.toggle("open", open);
+    document.documentElement.classList.toggle("menu-open", open);
+    document.documentElement.style.overflow = open ? "hidden" : "";   // stop the page scrolling behind the menu
+    toggle.setAttribute("aria-expanded", open);
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    if (lenis) open ? lenis.stop() : lenis.start();
+    if (open) phoneMenu.querySelector("a").focus({ preventScroll: true });
+  }
+  toggle.addEventListener("click", () => setMenu(!phoneMenu.classList.contains("open")));
+  phoneMenu.querySelectorAll('ul a').forEach(a => a.addEventListener("click", e => {
+    e.preventDefault();
+    setMenu(false);
+    const target = document.querySelector(a.getAttribute("href"));
+    lenis ? lenis.scrollTo(target, { offset: -70, force: true }) : target.scrollIntoView({ behavior: "smooth" });
+  }));
+  addEventListener("keydown", e => {
+    if (e.key === "Escape" && phoneMenu.classList.contains("open")) { setMenu(false); toggle.focus(); }
+  });
+  matchMedia("(min-width: 761px)").addEventListener("change", e => { if (e.matches) setMenu(false); });
+
+  // Parallax: the big framed photos drift a little slower than the page as you scroll
+  const drifters = [...document.querySelectorAll(".frame img")];
+  function drift() {
+    const vh = innerHeight;
+    drifters.forEach(img => {
+      const r = img.parentElement.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;                                // off screen, skip
+      const progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2); // -1 (above) … 1 (below)
+      img.style.translate = `0 ${(-progress * r.height * 0.05).toFixed(1)}px`;
+    });
+  }
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    addEventListener("scroll", drift, { passive: true });
+    addEventListener("resize", drift);
+    drift();
+  }
+
+  // ===== Drink builder =====
+  // The menu, in one place. Change prices here and the builder follows.
+  const DRINKS = [
+    { name: "Matcha latte", price: 160, type: "matcha" },
+    { name: "Seasalt Matcha", price: 170, type: "matcha" },
+    { name: "Earl Grey latte", price: 200, type: "matcha" },
+    { name: "Toasted Milk Cereal", price: 210, type: "matcha" },
+    { name: "Vanilla Crunch", price: 195, type: "matcha" },
+    { name: "Caramiso latte", price: 200, type: "matcha" },
+    { name: "Hojicha latte", price: 150, type: "hojicha" },
+    { name: "Seasalt Hojicha", price: 160, type: "hojicha" },
+    { name: "Hor-jicha", price: 200, type: "hojicha" },
+    { name: "Vanilla Crunch Hojicha", price: 195, type: "hojicha" },
+  ];
+  const OAT_EXTRA = 10;
+  const MESSENGER = "https://m.me/mirou.matchaph";
+  // Towns she delivers to. Add a town here and it shows up in the checker and the receipt.
+  const AREAS = ["Bay", "Calamba", "Los Baños", "Cabuyao", "Victoria"];
+  const ELSEWHERE = "elsewhere";
+  const peso = n => "₱" + n.toLocaleString("en-PH");
+  const $ = id => document.getElementById(id);
+  const form = $("builder-form");
+
+  // Drink choices, grouped like the menu
+  $("drink-picks").innerHTML = ["matcha", "hojicha"].map(type =>
+    `<p class="group mono">${type}</p>` +
+    DRINKS.filter(d => d.type === type).map(d =>
+      `<label class="chip"><input type="radio" name="drink" value="${d.name}"><span>${d.name} <em>${peso(d.price)}</em></span></label>`
+    ).join("")
+  ).join("");
+  form.drink[0].checked = true;
+
+  let qty = 1;
+  let order = [];
+  try { order = JSON.parse(localStorage.getItem("mirou-order")) || []; } catch {}
+  // re-check a saved order against today's menu and prices (same drink + milk = one line)
+  order = (Array.isArray(order) ? order : []).reduce((list, l) => {
+    const d = DRINKS.find(d => d.name === l.name);
+    if (!d) return list;
+    const oat = l.oat === true;
+    const qty = Math.min(20, Math.max(1, parseInt(l.qty) || 1));
+    const same = list.find(x => x.name === d.name && x.oat === oat);
+    if (same) same.qty = Math.min(20, same.qty + qty);
+    else list.push({ name: d.name, oat, qty, unit: d.price + (oat ? OAT_EXTRA : 0) });
+    return list;
+  }, []);
+
+  // What's currently picked in the form
+  function current() {
+    const drink = DRINKS.find(d => d.name === form.drink.value);
+    const oat = form.milk.value === "oatmilk";
+    return { name: drink.name, oat, unit: drink.price + (oat ? OAT_EXTRA : 0) };
+  }
+  const details = l => l.oat ? "oatmilk" : "";
+
+  function updateForm() {
+    const c = current();
+    $("qty").textContent = qty;
+    roll($("line-total"), c.unit * qty);
+  }
+
+  // Odometer: a price rolls digit by digit to its new value (lined up from the right, like a counter)
+  function roll(el, value) {
+    if (el.dataset.value !== undefined && Number(el.dataset.value) === value) return;
+    const text = peso(value);
+    const before = el.dataset.value !== undefined ? peso(Number(el.dataset.value)) : text;
+    const shift = text.length - before.length;
+    el.dataset.value = value;
+    el.innerHTML = `<span class="sr-only">${text}</span><span class="odo-wrap" aria-hidden="true">` +
+      [...text].map((ch, i) => {
+        if (!/\d/.test(ch)) return `<span class="odo-sym">${ch}</span>`;
+        const old = before[i - shift];
+        const from = /\d/.test(old || "") ? old : 0;
+        return `<span class="odo"><span class="odo-strip" style="--from:${from};--to:${ch};--d:${(text.length - 1 - i) * 45}ms">` +
+          [..."0123456789"].map(n => `<span>${n}</span>`).join("") + `</span></span>`;
+      }).join("") + `</span>`;
+    el.offsetWidth; // let the browser draw the old digits first…
+    el.querySelectorAll(".odo-strip").forEach(s => s.classList.add("go")); // …then roll to the new ones
+  }
+
+  function orderText() {
+    const lines = order.map(l => `• ${l.qty}× ${l.name}${details(l) ? ` (${details(l)})` : ""}: ${peso(l.unit * l.qty)}`);
+    const note = $("order-note").value.trim();
+    return [
+      "Hi mirou matcha! I'd like to order:",
+      ...lines,
+      `Total: ${peso(total())}${howValue() === "Delivery" ? " + delivery fee (let's settle it here)" : ""}`,
+      `For: ${forLine()}`,
+      note && `Notes: ${note}`,
+    ].filter(Boolean).join("\n");
+  }
+  const total = () => order.reduce((sum, l) => sum + l.unit * l.qty, 0);
+  const howValue = () => document.querySelector('[name="how"]:checked').value;
+  function forLine() {
+    const area = $("order-area").value;
+    if (howValue() !== "Delivery" || !area) return howValue();
+    return area === ELSEWHERE ? "Delivery (outside your usual areas, can you check if you can reach me?)" : `Delivery to ${area}`;
+  }
+
+  // Fill the receipt's delivery-area picker from the AREAS list
+  $("order-area").insertAdjacentHTML("beforeend",
+    AREAS.map(a => `<option value="${a}">${a}</option>`).join("") + `<option value="${ELSEWHERE}">Somewhere else (we'll check)</option>`);
+  $("order-area").addEventListener("change", renderReceipt);
+
+  function renderReceipt() {
+    $("area-field").hidden = $("fee-note").hidden = howValue() !== "Delivery";
+    const list = $("order-lines");
+    list.innerHTML = order.length
+      ? order.map((l, i) => `
+          <li>
+            <span>${l.qty}× ${l.name}</span>
+            <span>${peso(l.unit * l.qty)}</span>
+            <button class="x" type="button" data-remove="${i}" aria-label="Remove ${l.name}">×</button>
+            ${details(l) ? `<small>${details(l)}</small>` : ""}
+          </li>`).join("")
+      : `<li class="empty">no drinks yet, pick one ✿</li>`;
+    roll($("order-total"), total());
+    const send = $("send-order");
+    send.setAttribute("aria-disabled", order.length ? "false" : "true");
+    send.href = MESSENGER + "?text=" + encodeURIComponent(orderText());
+    $("clear-order").hidden = !order.length;
+    try { localStorage.setItem("mirou-order", JSON.stringify(order)); } catch {}
+  }
+
+  form.addEventListener("change", updateForm);
+  form.querySelectorAll(".qty button").forEach(b => b.addEventListener("click", () => {
+    qty = Math.min(20, Math.max(1, qty + Number(b.dataset.step)));
+    updateForm();
+  }));
+  const drinkImg = {};   // drink name → its menu photo (filled in where the "+ order this" buttons are made)
+  function bump() {
+    const wrap = $("receipt-wrap");
+    wrap.classList.remove("bump"); void wrap.offsetWidth; wrap.classList.add("bump");
+  }
+
+  // A little cup flies in an arc from the "Add" button into the receipt, then the receipt updates
+  function flyCup(name, fromEl, done) {
+    let finished = false;
+    const finish = () => { if (!finished) { finished = true; img.remove(); done(); } };
+    const size = 64;
+    const a = fromEl.getBoundingClientRect();
+    const list = $("order-lines").getBoundingClientRect();
+    const clampY = y => Math.max(20, Math.min(y, innerHeight - size - 20));   // keep it on screen
+    const sx = a.left + a.width / 2 - size / 2, sy = a.top + a.height / 2 - size / 2;
+    const ex = list.left + list.width / 2 - size / 2, ey = clampY(list.bottom - size / 2);
+    const cx = (sx + ex) / 2, cy = Math.min(sy, ey) - 160;                   // the top of the arc
+    const img = new Image();
+    img.src = drinkImg[name]; img.alt = ""; img.className = "fly";
+    document.body.appendChild(img);
+    const frames = [];
+    for (let i = 0; i <= 14; i++) {
+      const t = i / 14, u = 1 - t;
+      const x = u * u * sx + 2 * u * t * cx + t * t * ex;   // a smooth curve through the arc point
+      const y = u * u * sy + 2 * u * t * cy + t * t * ey;
+      const s = t < .15 ? .6 + t / .15 * .5 : 1.1 - (t - .15) / .85 * .7;
+      frames.push({ transform: `translate(${x}px, ${y}px) scale(${s}) rotate(${-16 * Math.sin(t * Math.PI)}deg)`, opacity: t < .1 ? t * 10 : 1 });
+    }
+    img.animate(frames, { duration: 850, easing: "cubic-bezier(.45, 0, .25, 1)" }).onfinish = finish;
+    setTimeout(finish, 1300);   // safety net in case the animation is paused (e.g. a background tab)
+  }
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const c = current();
+    const same = order.find(l => l.name === c.name && l.oat === c.oat);
+    if (same) same.qty += qty; else order.push({ ...c, qty });
+    qty = 1;
+    updateForm();
+    $("order-status").textContent = "";
+    const land = () => { renderReceipt(); bump(); };
+    calm || !drinkImg[c.name] ? land() : flyCup(c.name, e.submitter || form.querySelector('[type="submit"]'), land);
+  });
+  $("order-lines").addEventListener("click", e => {
+    const i = e.target.dataset.remove;
+    if (i !== undefined) { order.splice(Number(i), 1); renderReceipt(); }
+  });
+  $("clear-order").addEventListener("click", () => { order = []; renderReceipt(); $("order-status").textContent = ""; });
+  $("order-note").addEventListener("input", renderReceipt);
+  document.querySelectorAll('[name="how"]').forEach(r => r.addEventListener("change", renderReceipt));
+
+  // Copy the order, then let the link open Messenger (paste it in the chat)
+  function copyText(text) {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;opacity:0";
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch {}
+    ta.remove();
+    if (!ok && navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
+    return ok || !!navigator.clipboard;
+  }
+  $("send-order").addEventListener("click", e => {
+    if (!order.length) { e.preventDefault(); return; }
+    const copied = copyText(orderText());
+    $("order-status").textContent = copied
+      ? "Copied! Paste it in the Messenger chat ✿"
+      : "Opening Messenger… (copy didn't work, so please type your order there)";
+  });
+
+  // "+ order this" on every menu card: pick that drink in the builder and glide there
+  document.querySelectorAll(".menu-grid .item").forEach(card => {
+    const name = card.querySelector("h3").textContent.replace(/[★✽]/g, "").replace(/₱\d+/, "").trim();
+    const drink = DRINKS.find(d => d.name === name);
+    if (!drink) return;
+    drinkImg[drink.name] = card.querySelector("img").src;
+    const btn = document.createElement("button");
+    btn.className = "order-this"; btn.type = "button"; btn.textContent = "+ order this";
+    btn.addEventListener("click", () => {
+      form.querySelector(`[name="drink"][value="${drink.name}"]`).checked = true;
+      qty = 1; updateForm();
+      const target = $("build");
+      lenis ? lenis.scrollTo(target, { offset: -70 }) : target.scrollIntoView({ behavior: "smooth" });
+    });
+    card.querySelector(".item-body").appendChild(btn);
+  });
+
+  // Hide the floating phone button while the builder is on screen
+  const floatBtn = document.querySelector(".float-order");
+  new IntersectionObserver(([e]) => floatBtn.classList.toggle("away", e.isIntersecting), { threshold: 0.05 }).observe($("build"));
+
+  updateForm(); renderReceipt();
+
+  // ===== Menu tabs: slide the pill, shift the colors, shuffle the cards =====
+  const menuSection = $("menu");
+  const tabBar = document.querySelector(".tabs");
+  const pill = document.createElement("span");
+  pill.className = "tab-pill";
+  tabBar.prepend(pill);
+  tabBar.classList.add("ready");
+  function placePill(animate) {
+    const t = tabBar.querySelector('[aria-selected="true"]');
+    if (!animate) pill.style.transition = "none";
+    pill.style.width = t.offsetWidth + "px";
+    pill.style.translate = t.offsetLeft + "px 0";
+    if (!animate) { pill.offsetWidth; pill.style.transition = ""; }
+  }
+  placePill(false);
+  addEventListener("resize", () => placePill(false));
+  if (document.fonts) document.fonts.ready.then(() => placePill(false));   // tab widths change once the fonts load
+
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const cardsIn = panel => [...panel.querySelectorAll(".menu-grid .item, .extras .extra")];
+  let switching = false;
+  document.querySelectorAll(".tab").forEach(tab => tab.addEventListener("click", async () => {
+    if (switching || tab.getAttribute("aria-selected") === "true") return;
+    switching = true;
+    const fromPanel = document.querySelector('[role="tabpanel"]:not([hidden])');
+    const toPanel = $(tab.getAttribute("aria-controls"));
+    const type = tab.id === "tab-hojicha" ? "hojicha" : "matcha";
+
+    document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t === tab));
+    menuSection.classList.toggle("hojicha", type === "hojicha");
+    document.querySelectorAll(".menu-mark span").forEach(s => s.classList.toggle("on", s.dataset.type === type));
+    placePill(true);
+
+    if (!calm) {   // old cards drop away one by one
+      const out = cardsIn(fromPanel);
+      out.forEach((el, i) => { el.style.setProperty("--d", i * 40 + "ms"); el.classList.add("leave"); });
+      await wait(300 + out.length * 40);
+      out.forEach(el => el.classList.remove("leave"));
+    }
+    fromPanel.hidden = true;
+    toPanel.hidden = false;
+    if (!calm) {   // new cards float up one by one, with a tiny tilt
+      const inn = cardsIn(toPanel);
+      inn.forEach((el, i) => {
+        seen.unobserve(el); el.classList.remove("reveal", "in");   // this animation replaces the scroll fade-in
+        el.style.setProperty("--d", i * 70 + "ms");
+        el.style.setProperty("--r", (i % 2 ? 1.5 : -1.5) + "deg");
+        el.classList.add("enter");
+      });
+      toPanel.offsetWidth;
+      inn.forEach(el => { el.classList.add("entering"); el.classList.remove("enter"); });
+      await wait(900 + inn.length * 70);
+      inn.forEach(el => el.classList.remove("entering"));
+    }
+    switching = false;
+  }));
+
+  // Magnetic buttons: they lean gently toward the mouse (only on computers with a mouse)
+  if (!calm && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    document.querySelectorAll(".btn:not(.float-order)").forEach(btn => {
+      btn.addEventListener("pointermove", e => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.18;
+        const y = (e.clientY - r.top - r.height / 2) * 0.3;
+        btn.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
+      });
+      btn.addEventListener("pointerleave", () => { btn.style.translate = ""; });
+    });
+  }
+
+  // Marquee: copy each strip's content once, so sliding it left by half loops without a gap
+  document.querySelectorAll(".marquee").forEach(m => {
+    const track = m.querySelector(".marquee-track");
+    [...track.children].forEach(el => {
+      const copy = el.cloneNode(true);
+      copy.setAttribute("aria-hidden", "true");
+      if (copy.tagName === "IMG") copy.alt = "";
+      track.appendChild(copy);
+    });
+    m.classList.add("ready");
+  });
+
+  // Reveal on scroll: fade things up as they come into view.
+  // Items in the same group appear one after another (a "stagger").
+  const groups = [
+    ".hero .wrap > *", ".section-head", ".about .wrap > *", ".menu-grid .item", ".extra", ".builder .panel", ".receipt-wrap",
+    ".order .wrap > div:not(.frame) > :not(.steps)", ".steps li", ".order .wrap > .frame", ".reviews-grid a", ".photo-strip", "footer .wrap > *"
+  ];
+  const seen = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      el.classList.add("in");
+      seen.unobserve(el);
+      // once it has faded in, give it back its normal hover effects
+      el.addEventListener("transitionend", function done(ev) {
+        if (ev.target !== el) return;
+        el.removeEventListener("transitionend", done);
+        el.classList.remove("reveal", "in");
+      });
+    });
+  }, { threshold: 0.15 });
+  groups.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      const i = [...el.parentElement.children].indexOf(el);
+      el.style.setProperty("--delay", Math.min(i, 5) * 0.09 + "s");
+      el.classList.add("reveal");
+      seen.observe(el);
+    });
+  });
+
+  // ===== "Open now" badge, always in Philippine time (even if a visitor's phone is set elsewhere) =====
+  const HOURS = { open: 12, close: 21 };   // 12nn – 9pm, every day
+  const hourName = h => h === 12 ? "12nn" : h > 12 ? `${h - 12}pm` : `${h}am`;
+  function manilaHour() {
+    const p = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Manila", hour: "numeric", minute: "numeric", hourCycle: "h23" })
+      .formatToParts(new Date()).map(x => [x.type, x.value]));
+    return (Number(p.hour) % 24) + Number(p.minute) / 60;   // e.g. 14.5 = 2:30pm
+  }
+  function updateOpenBadge() {
+    const t = manilaHour();
+    let state, text;
+    if (t < HOURS.open) { state = "closed"; text = `Opens today at ${hourName(HOURS.open)}`; }
+    else if (t < HOURS.close - 0.5) { state = "open"; text = `Open now · until ${hourName(HOURS.close)}`; }
+    else if (t < HOURS.close) { state = "soon"; text = `Closing soon · until ${hourName(HOURS.close)}`; }
+    else { state = "closed"; text = `Closed · opens tomorrow ${hourName(HOURS.open)}`; }
+    $("open-badge").className = "open-badge is-" + state;
+    $("open-text").textContent = text;
+  }
+  updateOpenBadge();
+  setInterval(updateOpenBadge, 60 * 1000);
+
+  // ===== Delivery checker =====
+  const simplify = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")   // "Baños" → "banos"
+    .replace(/\b(city|of|laguna|brgy|barangay)\b/g, "").replace(/[^a-z]/g, "");
+  const NICKNAMES = { uplb: "Los Baños", elbi: "Los Baños", lb: "Los Baños" };
+  function findArea(text) {
+    const q = simplify(text);
+    if (NICKNAMES[q]) return NICKNAMES[q];
+    if (q.length < 3) return null;
+    return AREAS.find(a => simplify(a).startsWith(q) || q.includes(simplify(a))) || null;
+  }
+  const areaInput = $("area-input"), areaResult = $("area-result");
+  $("area-chips").innerHTML = AREAS.map(a => `<button type="button" class="area-chip">${a}</button>`).join("");
+  function checkArea() {
+    const typed = areaInput.value.trim();
+    const found = findArea(typed);
+    document.querySelectorAll(".area-chip").forEach(c => c.classList.toggle("on", c.textContent === found));
+    areaResult.className = "area-result";
+    areaResult.textContent = "";
+    if (!typed) return;
+    const link = document.createElement("a");
+    if (found) {
+      areaResult.classList.add("yes");
+      areaResult.append(found === "Bay"
+        ? "Bay is home! We deliver around Bay, or you can pick up. "
+        : `Yes, we deliver to ${found}! The delivery fee depends on your exact location, and we'll settle it on Messenger. `);
+      link.href = "#build"; link.textContent = "Build your order →";
+      link.addEventListener("click", () => {   // pre-fill Delivery + this town on the receipt
+        document.querySelector('[name="how"][value="Delivery"]').checked = true;
+        $("order-area").value = found;
+        renderReceipt();
+      });
+    } else if (simplify(typed).length >= 3) {
+      areaResult.append(`${typed} isn't on our usual list, but message us and we'll check if we can reach you. `);
+      link.href = MESSENGER; link.target = "_blank"; link.rel = "noopener"; link.textContent = "Ask on Messenger →";
+    } else return;
+    areaResult.append(link);
+  }
+  areaInput.addEventListener("input", checkArea);
+  document.querySelectorAll(".area-chip").forEach(c => c.addEventListener("click", () => { areaInput.value = c.textContent; checkArea(); }));
+
+  // ===== Photo lightbox =====
+  const lb = $("lightbox"), lbImg = $("lb-img");
+  const reviewPhotos = [...document.querySelectorAll(".reviews-grid img")].map(i => ({ src: i.getAttribute("src"), alt: i.alt }));
+  const galleryPhotos = [...document.querySelectorAll(".photo-strip img")].filter(i => i.alt)   // skip the scrolling copies
+    .map(i => ({ src: i.getAttribute("src"), alt: i.alt }));
+  let lbSet = [], lbIndex = 0, swapTimer;
+  function showPhoto(i, dir = 0) {
+    lbIndex = (i + lbSet.length) % lbSet.length;
+    const p = lbSet[lbIndex];
+    const apply = () => {
+      lbImg.src = p.src; lbImg.alt = p.alt;
+      $("lb-count").textContent = lbSet.length > 1 ? `${lbIndex + 1} / ${lbSet.length}` : "";
+    };
+    clearTimeout(swapTimer);
+    if (!dir || calm) { lbImg.classList.remove("swap"); apply(); return; }
+    lbImg.style.setProperty("--dir", (dir > 0 ? -24 : 24) + "px");   // slide the old photo out…
+    lbImg.classList.add("swap");
+    swapTimer = setTimeout(() => {                                     // …then the new one in
+      apply();
+      lbImg.decode().catch(() => {}).then(() => { lbImg.style.setProperty("--dir", "0px"); lbImg.classList.remove("swap"); });
+    }, 220);
+  }
+  function openPhotos(set, i) {
+    lbSet = set;
+    showPhoto(Math.max(0, i));
+    lb.querySelectorAll(".lb-prev, .lb-next").forEach(b => b.hidden = set.length < 2);
+    lb.showModal();
+    if (lenis) lenis.stop();
+  }
+  lb.addEventListener("close", () => { if (lenis) lenis.start(); });
+  $("lb-close").addEventListener("click", () => lb.close());
+  $("lb-prev").addEventListener("click", () => showPhoto(lbIndex - 1, -1));
+  $("lb-next").addEventListener("click", () => showPhoto(lbIndex + 1, 1));
+  lb.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight" && lbSet.length > 1) showPhoto(lbIndex + 1, 1);
+    if (e.key === "ArrowLeft" && lbSet.length > 1) showPhoto(lbIndex - 1, -1);
+  });
+  // swipe left/right on phones; tap the dark background to close
+  let swipeX = null, swiped = false;
+  lb.addEventListener("pointerdown", e => { swipeX = e.clientX; swiped = false; });
+  lb.addEventListener("pointerup", e => {
+    if (swipeX === null) return;
+    const dx = e.clientX - swipeX; swipeX = null;
+    if (Math.abs(dx) > 50 && lbSet.length > 1) { swiped = true; showPhoto(lbIndex + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); }
+  });
+  lb.addEventListener("click", e => {
+    if (swiped) { swiped = false; return; }
+    if (e.target === lb || e.target.classList.contains("lb-stage")) lb.close();
+  });
+  // open from the reviews (they stay normal links if the script can't run)…
+  document.querySelectorAll(".reviews-grid a").forEach((a, i) => a.addEventListener("click", e => { e.preventDefault(); openPhotos(reviewPhotos, i); }));
+  // …and from any photo in the gallery strips (including the scrolling copies)
+  document.querySelectorAll(".photo-strip img").forEach(img => {
+    const open = () => openPhotos(galleryPhotos, galleryPhotos.findIndex(p => p.src === img.getAttribute("src")));
+    img.addEventListener("click", open);
+    if (img.alt) {   // keyboard users can Tab to the originals and press Enter
+      img.tabIndex = 0; img.setAttribute("role", "button");
+      img.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+    }
+  });
+</script>
+</body>
+</html>
