@@ -1042,6 +1042,7 @@
     { name: "Vanilla Crunch Hojicha", price: 195, type: "hojicha" },
   ];
   const OAT_EXTRA = 10;
+  const MAX_QTY = 20;   // most cups of one drink on the order slip (bigger orders go through Messenger)
   const MESSENGER = "https://m.me/mirou.matchaph";
   // Towns she delivers to. Add a town here and it shows up in the checker and the receipt.
   const AREAS = ["Bay", "Calamba", "Los Baños", "Cabuyao", "Victoria"];
@@ -1067,9 +1068,9 @@
     const d = DRINKS.find(d => d.name === l.name);
     if (!d) return list;
     const oat = l.oat === true;
-    const qty = Math.min(20, Math.max(1, parseInt(l.qty) || 1));
+    const qty = Math.min(MAX_QTY, Math.max(1, parseInt(l.qty) || 1));
     const same = list.find(x => x.name === d.name && x.oat === oat);
-    if (same) same.qty = Math.min(20, same.qty + qty);
+    if (same) same.qty = Math.min(MAX_QTY, same.qty + qty);
     else list.push({ name: d.name, oat, qty, unit: d.price + (oat ? OAT_EXTRA : 0) });
     return list;
   }, []);
@@ -1153,7 +1154,7 @@
 
   form.addEventListener("change", updateForm);
   form.querySelectorAll(".qty button").forEach(b => b.addEventListener("click", () => {
-    qty = Math.min(20, Math.max(1, qty + Number(b.dataset.step)));
+    qty = Math.min(MAX_QTY, Math.max(1, qty + Number(b.dataset.step)));
     updateForm();
   }));
   const drinkImg = {};   // drink name → its menu photo (filled in where the "+ order this" buttons are made)
@@ -1192,10 +1193,15 @@
     e.preventDefault();
     const c = current();
     const same = order.find(l => l.name === c.name && l.oat === c.oat);
-    if (same) same.qty += qty; else order.push({ ...c, qty });
+    const added = Math.min(qty, MAX_QTY - (same ? same.qty : 0));   // only what still fits under MAX_QTY
+    const capped = added < qty;
     qty = 1;
     updateForm();
-    $("order-status").textContent = "";
+    $("order-status").textContent = capped
+      ? `${MAX_QTY} of one drink is the most the order slip takes. For a bigger order, just message us on Messenger ✿`
+      : "";
+    if (!added) return;
+    if (same) same.qty += added; else order.push({ ...c, qty: added });
     const land = () => { renderReceipt(); bump(); };
     calm || !drinkImg[c.name] ? land() : flyCup(c.name, e.submitter || form.querySelector('[type="submit"]'), land);
   });
