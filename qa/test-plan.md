@@ -50,6 +50,7 @@ The risk is highest where money and orders are involved, so the order builder, t
 | --- | --- |
 | Functional, end-to-end | Automated with Playwright: a real browser clicks through the site like a customer. |
 | Cross-browser and device | Every automated test runs on 3 set-ups (see section 4). |
+| Evidence | Every automated test in the report has a video of the run and a picture of its final screen. Failed tests also keep a full-size screenshot and a step-by-step trace. |
 | Regression | The full suite runs on every push. Each fixed bug has a test tagged with its ID (for example `@BUG-002`) so it cannot come back unnoticed. |
 | Exploratory and visual | Manual sessions, mainly on real phones, looking for anything the scripts cannot judge (see manual tests MT-01 to MT-08). |
 | Accessibility basics | Automated checks for photo descriptions, keyboard use and "reduce motion", plus a manual screen-reader spot check. |

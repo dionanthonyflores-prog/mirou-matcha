@@ -1,4 +1,5 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from './fixtures';
+import type { Page } from '@playwright/test';
 
 const viewer = (page: Page) => page.getByRole('dialog', { name: 'Photo viewer' });
 const shownPhoto = (page: Page) => page.locator('#lb-img');

@@ -18,7 +18,10 @@ export default defineConfig({
     : [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL,
-    trace: 'retain-on-failure',       // a step-by-step recording of any failed test, viewable in the report
+    // Evidence in the report: every test gets a video and a picture of its final screen (see tests/fixtures.ts).
+    // Failed tests also keep a full-size screenshot and a step-by-step trace for debugging.
+    video: 'on',
+    trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
 

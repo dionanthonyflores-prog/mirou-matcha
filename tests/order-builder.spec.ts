@@ -1,4 +1,5 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from './fixtures';
+import type { Page } from '@playwright/test';
 import { addToOrder, choose, drinkChoice, messengerText, setQty, slipLines, slipTotal, stubSocialSites } from './helpers';
 
 const lineTotal = (page: Page) => page.locator('#line-total .sr-only');

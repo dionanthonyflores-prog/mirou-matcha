@@ -26,6 +26,7 @@ The site lets customers browse the menu, build an order, check delivery to their
 - **A fake clock** tests the "Open now" badge at exact moments (11:59, 12:00, 20:29, 20:30, 21:00) and for visitors whose phones are set to other time zones, without waiting for real time to pass.
 - **Real touch input** tests swiping in the photo viewer, after a mouse-based test proved misleading (see below).
 - **Test design techniques:** boundary values, equivalence classes (11 ways to type a town), a decision table (pick up vs delivery), state transitions and error guessing (damaged saved data, script-like input).
+- **Evidence for every test:** the [test report](https://dionanthonyflores-prog.github.io/mirou-matcha/report/) has a video and a final-screen picture for each of the 228 runs, passed or failed. Failures also keep a step-by-step trace.
 - **External sites are replaced with a stand-in page,** so tests never send anything to Messenger, Facebook or Instagram.
 - **Traceability:** every test name starts with its test-case ID and is tagged with its requirement and any bug it guards, for example `TC-11 … @REQ-04 @BUG-002`.
 

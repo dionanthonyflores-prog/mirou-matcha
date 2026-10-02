@@ -49,7 +49,7 @@ Then open http://localhost:5174 in your browser.
 **[Read the QA case study →](qa/README.md)**
 
 - **54 automated test cases** with Playwright and TypeScript, run on desktop Chrome, an Android phone and an iPhone (243 runs in total).
-- **They run on GitHub on every push.** The site is only published if every test passes. [Latest test report](https://dionanthonyflores-prog.github.io/mirou-matcha/report/)
+- **They run on GitHub on every push.** The site is only published if every test passes. The [latest test report](https://dionanthonyflores-prog.github.io/mirou-matcha/report/) has a video and a final screenshot of every test.
 - **5 real bugs** found, fixed and covered by regression tests, with before/after evidence in the [defect log](qa/defect-log.md).
 - Plus a [test plan](qa/test-plan.md) and [test cases with traceability](qa/test-cases.md).
 

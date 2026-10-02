@@ -1,4 +1,5 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from './fixtures';
+import type { Page } from '@playwright/test';
 import { slipTotal, stubSocialSites } from './helpers';
 
 const townBox = (page: Page) => page.getByLabel('Do we deliver to you?');

@@ -4,6 +4,7 @@ Requirements (REQ-xx) are listed in the [test plan](test-plan.md#in-scope). Bugs
 
 - **54 automated test cases (TC-01 to TC-54).** Some are run with several inputs (for example 11 ways of typing a town), which makes **81 automated tests**. Each one runs on desktop Chrome, an Android phone and an iPhone, so **243 runs** in total. Of these, 228 apply and 15 are skipped on purpose, for example phone-menu tests on desktop.
 - **8 manual test cases (MT-01 to MT-08)** cover what automation cannot judge well, such as how photos look and real phones.
+- **Evidence:** in the [test report](https://dionanthonyflores-prog.github.io/mirou-matcha/report/), open any test to see its video and a picture of the final screen.
 - In the code, each test's name starts with its TC ID and is tagged with its requirement (`@REQ-04`) and any bug it guards (`@BUG-002`). You can filter by these tags in the [test report](https://dionanthonyflores-prog.github.io/mirou-matcha/report/).
 
 **"Runs on"** means: **All** = desktop, Android and iPhone · **Phones** = Android and iPhone · **Desktop** = desktop only.
