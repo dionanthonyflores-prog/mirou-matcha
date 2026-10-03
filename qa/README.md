@@ -10,7 +10,7 @@ How the [mirou matcha website](https://dionanthonyflores-prog.github.io/mirou-ma
 | Automated test cases | **54**: 81 tests × 3 devices = **243 runs** (228 apply, all pass; 15 skipped on purpose) |
 | Devices | Desktop Chrome, Android phone (Chromium), iPhone (WebKit) |
 | Manual test cases | **8**, for real phones, photos, Messenger and Facebook |
-| Bugs found and fixed | **5** (1 Major, 3 Minor, 1 Trivial), each with before/after evidence |
+| Bugs found and fixed | **7** (1 Major, 5 Minor, 1 Trivial), each with before/after evidence |
 | Runs | On every push to GitHub. The site is only published if every test passes. |
 
 **Read more:** [Test plan](test-plan.md) · [Test cases and traceability](test-cases.md) · [Defect log](defect-log.md) · [Latest test report](https://dionanthonyflores-prog.github.io/mirou-matcha/report/) · [Test code](../tests)
@@ -51,6 +51,8 @@ This is a **quality gate**: broken code cannot reach customers. The workflow is 
 | BUG-003 | On phones, the menu's "Reviews" link landed about 440px short | Minor | Automated check of the live site |
 | BUG-004 | A quick second tap on the menu tabs was ignored | Minor | Automated test |
 | BUG-005 | "clear order" showed on an empty order slip | Trivial | Automated test |
+| BUG-006 | On short phone screens the menu couldn't scroll, so Email was cut off | Minor | Manual check on a real phone (Galaxy S24 Ultra) |
+| BUG-007 | With the phone menu open, "Order" and the logo did nothing | Minor | Manual check on a real phone |
 
 Full reports, with steps, root causes, fixes and screenshots, are in the [defect log](defect-log.md).
 
@@ -62,6 +64,7 @@ Full reports, with steps, root causes, fixes and screenshots, are in the [defect
 - **Real bugs were told apart from test problems.** Eight failures turned out to be test or tooling issues, such as lazy-loaded photos, a mouse drag versus a finger swipe, and a test that tapped faster than any person could. Each was investigated and fixed in the test, not hidden. See [Investigated, not a bug](defect-log.md#investigated-not-a-bug).
 - **Flaky tests aren't tolerated.** A test that only failed sometimes was traced to its cause, fixed, and then repeated 5 times on each device (15/15 passed) before it was trusted. An independent run also caught a test running too close to its time limit, so every test's run time was checked against its limit.
 - **Evidence first.** After BUG-001 (where no "before" screenshot was kept), every bug had its evidence captured before the fix.
+- **Real phones find what emulators don't.** BUG-006 and BUG-007 passed every automated test, because the tests checked that the menu's links were correct, not that a customer could reach and use them on a shorter screen. Both were found by hand on a Galaxy S24 Ultra. The tests now cover both.
 - **Requirements get questioned, not just tested.** The 20-cup limit passed every test, because the tests checked what the code did. Only asking the owner showed it was never a business rule (CR-01).
 
 ## What's next

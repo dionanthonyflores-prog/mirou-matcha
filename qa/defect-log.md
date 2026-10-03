@@ -1,6 +1,6 @@
 # Defect log
 
-Five real bugs were found and fixed. Each fix has its own commit, and each bug except BUG-001 has an automated regression test that was seen to **fail on the buggy code and pass on the fixed code**.
+Seven real bugs were found and fixed. Each fix has its own commit, and each bug except BUG-001 has an automated regression test that was seen to **fail on the buggy code and pass on the fixed code**.
 
 Severity and priority are defined in the [test plan](test-plan.md#6-bug-reporting).
 
@@ -11,6 +11,8 @@ Severity and priority are defined in the [test plan](test-plan.md#6-bug-reportin
 | [BUG-003](#bug-003) | On phones, the menu's "Reviews" link lands about 440px short on a first visit | Minor | Medium | Automated check of the live site | Closed | [`c3c66f8`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/c3c66f8) | TC-36 |
 | [BUG-004](#bug-004) | A quick second tap on the menu tabs is ignored | Minor | Medium | Automated test TC-03 | Closed | [`c23eaae`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/c23eaae) | TC-03 |
 | [BUG-005](#bug-005) | "clear order" link shows on an empty order slip | Trivial | Low | Automated test TC-08 | Closed | [`f676ea1`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/f676ea1) | TC-08 |
+| [BUG-006](#bug-006) | On short phone screens the menu cannot be scrolled, so Email is cut off | Minor | High | Manual check on a real phone (Galaxy S24 Ultra) | Closed | [`1b1f0ee`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/1b1f0ee) | TC-37, MT-03 |
+| [BUG-007](#bug-007) | With the phone menu open, "Order" and the logo in the header do nothing | Minor | Medium | Manual check on a real phone (Galaxy S24 Ultra) | Closed | [`1b1f0ee`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/1b1f0ee) | TC-34 |
 
 ---
 
@@ -183,6 +185,64 @@ Severity and priority are defined in the [test plan](test-plan.md#6-bug-reportin
 **Fix:** add `.receipt .clear[hidden] { display: none; }`.
 
 **Verification:** TC-08 failed on all 3 set-ups before the fix and passes after.
+
+---
+
+## BUG-006
+
+**On short phone screens the menu cannot be scrolled, so Email is cut off**
+
+| | |
+| --- | --- |
+| Severity / priority | Minor / High. Customers can't reach the Email card or the last line of the menu. The email address is also in the page footer, so there is a workaround, but this is a popular phone and a customer found it first. |
+| Found | 3 Oct 2026, by Dion during a manual check on a Samsung Galaxy S24 Ultra |
+| Environment | Phones whose screen is shorter than the open menu. Reproduced on the emulated Android phone at 384 × 700. |
+| Fixed | 3 Oct 2026, [`1b1f0ee`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/1b1f0ee) |
+| Status | Closed |
+
+**Steps to reproduce:** on a phone, tap ☰ to open the menu, then swipe up to see the bottom of it.
+**Expected:** the menu scrolls, so Email and the "whisked by hand in bay, laguna ✿" line can be seen and tapped.
+**Actual:** the menu doesn't move. Email is cut off at the bottom of the screen and the last line can't be seen at all.
+
+| Before: the real phone | Before: after swiping up 3 times | After: after swiping up 3 times |
+| --- | --- | --- |
+| <img src="evidence/BUG-006-before-1-galaxy-s24-ultra.jpg" width="230" alt="Phone menu on a Galaxy S24 Ultra with the Email card cut off at the bottom of the screen"> | <img src="evidence/BUG-006-before-2-after-swiping-up.png" width="230" alt="Emulated phone: the menu has not moved after three swipes, Instagram is cut off"> | <img src="evidence/BUG-006-after-after-swiping-up.png" width="230" alt="Emulated phone: the menu has scrolled to the bottom, Email and the last line are fully visible"> |
+
+**Root cause:** opening the menu pauses the page's smooth-scrolling library (Lenis), so the page behind doesn't move. While paused, Lenis cancels **every** swipe on the page, including swipes inside the menu. The menu was built to scroll by itself when it doesn't fit, but it never got the chance.
+
+**Fix:** mark the menu with `data-lenis-prevent`, so Lenis leaves swipes inside it alone, and add `overscroll-behavior: contain`, so reaching the end of the menu doesn't scroll the page behind it.
+
+**Why the tests missed it:** TC-37 checked that the Email link pointed to the right address, but not that a customer could reach it. TC-37 now opens the menu on a 384 × 700 screen, swipes up with a finger, and checks that Email and the last line are fully on screen while the page behind stays still.
+
+**Verification:** TC-37 failed on the emulated Android phone before the fix ("viewport ratio 0" for Email) and passes after, 5 times in a row. WebKit can't simulate a finger swipe, so on iPhone this is part of manual test MT-03.
+
+---
+
+## BUG-007
+
+**With the phone menu open, "Order" and the logo in the header do nothing**
+
+| | |
+| --- | --- |
+| Severity / priority | Minor / Medium. The customer has to close the menu first, then tap again. |
+| Found | 3 Oct 2026, by Dion during the same manual check on a Galaxy S24 Ultra |
+| Environment | Phones (Android and iPhone) |
+| Fixed | 3 Oct 2026, [`1b1f0ee`](https://github.com/dionanthonyflores-prog/mirou-matcha/commit/1b1f0ee) |
+| Status | Closed |
+
+**Steps to reproduce:** on a phone, tap ☰ to open the menu, then tap **Order** in the header.
+**Expected:** the menu closes and the page goes to "build your order", like the menu's own "Build your order" link.
+**Actual:** nothing happens. The menu stays open.
+
+| Before: after tapping Order | After: after tapping Order |
+| --- | --- |
+| <img src="evidence/BUG-007-before-after-tapping-order.png" width="250" alt="The menu is still open after tapping Order"> | <img src="evidence/BUG-007-after-after-tapping-order.png" width="250" alt="The menu has closed and the page shows build your order"> |
+
+**Root cause:** the same paused smooth-scrolling library as BUG-006. It handles links that jump within the page, and while paused it ignores them, so neither the menu nor the page changed.
+
+**Fix:** the header's in-page links (the logo and "Order") close the menu first, which restarts smooth scrolling before it handles the link.
+
+**Verification:** TC-34 now also taps "Order" and the logo with the menu open. It failed on Android and iPhone before the fix and passes after, 5 times in a row on each.
 
 ---
 

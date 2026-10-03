@@ -70,10 +70,10 @@ These tests set the browser's clock to exact times.
 | ID | Test case | Expected result | Runs on | Guards |
 | --- | --- | --- | --- | --- |
 | TC-33 | Tap the menu button | A full-screen menu with 5 links. The button now says "Close menu", focus is on the first link, and the page behind cannot scroll. | Phones | |
-| TC-34 | Tap the button again | The menu closes and the page can scroll again. | Phones | |
+| TC-34 | Tap the button again; then, with the menu open, tap "Order", then the logo | The menu closes and the page can scroll again. "Order" closes the menu and lands on the order builder; the logo closes it and goes back to the top. | Phones | BUG-007 |
 | TC-35 | Press Esc with the menu open | The menu closes and keyboard focus returns to the menu button. | Phones | |
 | TC-36 | On a fresh visit, tap each of the 5 menu links | The menu closes and the section ends up just under the header (58–82px), checked after the page stops moving. | Phones | BUG-003 |
-| TC-37 | Check the contact links in the menu | Messenger, Facebook and Instagram open in a new tab at the right address. Email opens the mail app. | Phones | |
+| TC-37 | On a short screen (384 × 700), open the menu and swipe up; check the contact links | Email and the last line come fully into view and the page behind stays still. Messenger, Facebook and Instagram open in a new tab at the right address. Email opens the mail app. (The swipe runs on Android; on iPhone it is part of MT-03.) | Phones | BUG-006 |
 | TC-38 | Make the screen wide while the menu is open | The menu closes by itself. | Phones | |
 | TC-39 | Check the header | Desktop shows the 5 header links. Phones show the menu button instead. | All | |
 | TC-40 | Click each header link on desktop | Each section ends up just under the header. | Desktop | |
@@ -110,7 +110,7 @@ Run these on real devices before a big change goes live, and after any change to
 | --- | --- | --- | --- | --- |
 | MT-01 | Visual check of every photo | Open each menu card (both tabs), review and gallery photo at full size, on a phone and on a laptop. | No patches, stray marks, cut-off cups, stretching or blur. Each photo matches its drink. | Not run yet |
 | MT-02 | Real Android phone walkthrough (Chrome) | Browse the menu, build an order with delivery, check a town, use the phone menu and the photo viewer, and rotate the phone. | Everything works as on the emulated phone, and the text is readable without zooming. | Not run yet |
-| MT-03 | Real iPhone walkthrough (Safari) | As MT-02, and also swipe left and right in the photo viewer. | As MT-02. Swiping changes photos and does not close the viewer. | Not run yet |
+| MT-03 | Real iPhone walkthrough (Safari) | As MT-02, and also swipe left and right in the photo viewer, and scroll the open ☰ menu to the bottom. | As MT-02. Swiping changes photos and does not close the viewer. The whole menu, down to Email and the last line, can be reached (BUG-006). | Not run yet |
 | MT-04 | Messenger hand-off on a real phone | Build an order, then tap "Copy order & open Messenger". In the chat, paste. | The Messenger app or chat with mirou matcha opens, and the pasted text is the full order. | Not run yet |
 | MT-05 | Facebook share preview | Paste the site address into Facebook's Sharing Debugger (developers.facebook.com/tools/debug). | It shows the share picture, the title "mirou matcha · homebased matcha slow bar in Bay, Laguna" and the description. | Not run yet |
 | MT-06 | Slow connection | In Chrome DevTools, set Network to "Slow 4G", reload and use the site. | The page is usable while photos load, and nothing jumps around. | Not run yet |
@@ -132,7 +132,7 @@ Every requirement is linked to its tests and to any bugs found in it. ✅ means 
 | REQ-07 Send on Messenger | TC-20, TC-21, TC-22 | MT-04 | | ✅ |
 | REQ-08 Delivery checker | TC-23 – TC-28 | MT-02 | | ✅ |
 | REQ-09 Open/closed badge | TC-30, TC-31, TC-32 | | | ✅ |
-| REQ-10 Phone menu | TC-33 – TC-38 | MT-02, MT-03 | BUG-003 | ✅ |
+| REQ-10 Phone menu | TC-33 – TC-38 | MT-02, MT-03 | BUG-003, BUG-006, BUG-007 | ✅ |
 | REQ-11 Photo viewer | TC-42 – TC-47 | MT-03 | | ✅ |
 | REQ-12 Phone and desktop layouts | TC-39, TC-40, TC-41, TC-50 | MT-02, MT-03 | | ✅ |
 | REQ-13 Page health and photos | TC-48, TC-49 | MT-01, MT-06 | BUG-001 | ✅ |
