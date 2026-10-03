@@ -214,7 +214,7 @@ Severity and priority are defined in the [test plan](test-plan.md#6-bug-reportin
 
 **Why the tests missed it:** TC-37 checked that the Email link pointed to the right address, but not that a customer could reach it. TC-37 now opens the menu on a 384 × 700 screen, swipes up with a finger, and checks that Email and the last line are fully on screen while the page behind stays still.
 
-**Verification:** TC-37 failed on the emulated Android phone before the fix ("viewport ratio 0" for Email) and passes after, 5 times in a row. WebKit can't simulate a finger swipe, so on iPhone this is part of manual test MT-03.
+**Verification:** TC-37 failed on the emulated Android phone before the fix ("viewport ratio 0" for Email) and passes after, 5 times in a row. WebKit can't simulate a finger swipe, so on iPhone this is part of manual test MT-03. After the release, Dion retested on the Galaxy S24 Ultra where it was found: the menu scrolls to the bottom.
 
 ---
 
@@ -242,7 +242,7 @@ Severity and priority are defined in the [test plan](test-plan.md#6-bug-reportin
 
 **Fix:** the header's in-page links (the logo and "Order") close the menu first, which restarts smooth scrolling before it handles the link.
 
-**Verification:** TC-34 now also taps "Order" and the logo with the menu open. It failed on Android and iPhone before the fix and passes after, 5 times in a row on each.
+**Verification:** TC-34 now also taps "Order" and the logo with the menu open. It failed on Android and iPhone before the fix and passes after, 5 times in a row on each. After the release, Dion retested on the Galaxy S24 Ultra: Order and the logo close the menu and go to the right place.
 
 ---
 
