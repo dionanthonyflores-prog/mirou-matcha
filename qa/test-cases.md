@@ -108,14 +108,14 @@ Run these on real devices before a big change goes live, and after any change to
 
 | ID | Test case | Steps | Expected result | Status |
 | --- | --- | --- | --- | --- |
-| MT-01 | Visual check of every photo | Open each menu card (both tabs), review and gallery photo at full size, on a phone and on a laptop. | No patches, stray marks, cut-off cups, stretching or blur. Each photo matches its drink. | Not run yet |
+| MT-01 | Visual check of every photo | Open each menu card (both tabs), review and gallery photo at full size, on a phone and on a laptop. | No patches, stray marks, cut-off cups, stretching or blur. Each photo matches its drink. | **Passed**, 3 Oct 2026 (Dion): Galaxy S24 Ultra in Chrome, and a laptop |
 | MT-02 | Real Android phone walkthrough (Chrome) | Browse the menu, build an order with delivery, check a town, use the phone menu and the photo viewer, and rotate the phone. | Everything works as on the emulated phone, and the text is readable without zooming. | Not run yet |
 | MT-03 | Real iPhone walkthrough (Safari) | As MT-02, and also swipe left and right in the photo viewer, and scroll the open ☰ menu to the bottom. | As MT-02. Swiping changes photos and does not close the viewer. The whole menu, down to Email and the last line, can be reached (BUG-006). | Not run yet |
 | MT-04 | Messenger hand-off on a real phone | Build an order, then tap "Copy order & open Messenger". In the chat, paste. | The Messenger app or chat with mirou matcha opens, and the pasted text is the full order. | Not run yet |
 | MT-05 | Facebook share preview | Paste the site address into Facebook's Sharing Debugger (developers.facebook.com/tools/debug). | It shows the share picture, the title "mirou matcha · homebased matcha slow bar in Bay, Laguna" and the description. | Not run yet |
 | MT-06 | Slow connection | In Chrome DevTools, set Network to "Slow 4G", reload and use the site. | The page is usable while photos load, and nothing jumps around. | Not run yet |
 | MT-07 | Screen reader spot check | With TalkBack (Android) or VoiceOver (iPhone), go through the menu, add a drink and reach the total. | Drink names, prices, buttons and the total are read out clearly. | Not run yet |
-| MT-08 | Exploratory session, 30 minutes | Charter: "try to make the order slip wrong". Rapid taps, back button, odd quantities, switching milk mid-way, reloading at odd moments. | Note anything surprising. Log real problems as bugs. | Not run yet |
+| MT-08 | Exploratory session, 30 minutes | Charter: "try to make the order slip wrong". Rapid taps, back button, odd quantities, switching milk mid-way, reloading at odd moments. | Note anything surprising. Log real problems as bugs. | **Done**, 3 Oct 2026 (Dion): no order-slip bugs. Raised a question about the 20-cup limit, which became [CR-01](test-plan.md#changes-to-the-requirements) |
 
 ## Traceability matrix
 

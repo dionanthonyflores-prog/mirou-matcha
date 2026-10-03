@@ -69,7 +69,7 @@ Full reports, with steps, root causes, fixes and screenshots, are in the [defect
 
 ## What's next
 
-- Run the 8 manual test cases on a real Android phone and a real iPhone.
+- Run the remaining manual test cases (MT-02 to MT-07), including the real-iPhone walkthrough. MT-01 and MT-08 are done.
 - Add an automated accessibility scan (axe-core) to catch colour-contrast and labelling issues.
 - Schedule a daily test run against the live site, so a problem with an outside service (fonts, smooth-scrolling library) is noticed even when nobody pushes code.
 
