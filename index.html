@@ -384,8 +384,9 @@
   .menu-toggle { display: none; }
   .mobile-menu {
     position: fixed; inset: 0; z-index: 9; /* just under the sticky header, so the ☰/✕ button stays tappable */
-    display: flex; flex-direction: column; padding: 96px 24px 32px;
+    display: flex; flex-direction: column; padding: 96px 24px calc(32px + env(safe-area-inset-bottom, 0px));
     background: var(--paper); overflow-y: auto;
+    overscroll-behavior: contain;   /* scrolling to the end of the menu must not scroll the page behind it */
     opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s linear .5s;
   }
   .mobile-menu.open { opacity: 1; visibility: visible; transition: opacity .5s var(--ease); }
@@ -573,8 +574,9 @@
   </div>
 </header>
 
-<!-- PHONE MENU: opens full-screen when the ☰ button is tapped -->
-<nav class="mobile-menu" id="mobile-menu" aria-label="Menu">
+<!-- PHONE MENU: opens full-screen when the ☰ button is tapped.
+     data-lenis-prevent lets it scroll on short screens while the page's smooth scrolling is paused. -->
+<nav class="mobile-menu" id="mobile-menu" aria-label="Menu" data-lenis-prevent>
   <ul>
     <li><a href="#about" style="--i:0"><span>About</span><small>01</small></a></li>
     <li><a href="#menu" style="--i:1"><span>Menu</span><small>02</small></a></li>
@@ -1001,6 +1003,11 @@
     if (open) phoneMenu.querySelector("a").focus({ preventScroll: true });
   }
   toggle.addEventListener("click", () => setMenu(!phoneMenu.classList.contains("open")));
+  // The logo and "Order" in the header still work while the menu is open: close the menu first,
+  // so smooth scrolling is running again when it handles the link
+  document.querySelectorAll('header a[href^="#"]').forEach(a => a.addEventListener("click", () => {
+    if (phoneMenu.classList.contains("open")) setMenu(false);
+  }));
   phoneMenu.querySelectorAll('ul a').forEach(a => a.addEventListener("click", e => {
     e.preventDefault();
     setMenu(false);

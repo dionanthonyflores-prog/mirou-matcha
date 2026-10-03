@@ -29,12 +29,25 @@ test.describe('Phone menu', { tag: '@REQ-10' }, () => {
     expect(await page.evaluate(() => document.documentElement.style.overflow)).toBe('hidden');
   });
 
-  test('TC-34 the menu closes with the same button', async ({ page }) => {
+  test('TC-34 the menu closes with the same button, and the header\'s Order button and logo still work while it is open', { tag: '@BUG-007' }, async ({ page }) => {
     await page.getByRole('button', { name: 'Open menu' }).click();
     await page.getByRole('button', { name: 'Close menu' }).click();
     await expect(menuButton(page)).toHaveAttribute('aria-expanded', 'false');
     await expect(phoneMenu(page)).toBeHidden();
     expect(await page.evaluate(() => document.documentElement.style.overflow)).toBe('');
+
+    // "Order" in the header: the menu closes and the page goes to the order builder
+    await page.getByRole('button', { name: 'Open menu' }).click();
+    await page.locator('header').getByRole('link', { name: 'Order', exact: true }).click();
+    await expect(menuButton(page)).toHaveAttribute('aria-expanded', 'false');
+    await expect(phoneMenu(page)).toBeHidden();
+    await expectSectionAtTop(page, 'build');
+
+    // The logo: the menu closes and the page goes back to the top
+    await page.getByRole('button', { name: 'Open menu' }).click();
+    await page.locator('header .brand').click();
+    await expect(menuButton(page)).toHaveAttribute('aria-expanded', 'false');
+    await expect.poll(() => page.evaluate(() => scrollY), { message: 'the page should go back to the top' }).toBeLessThan(5);
   });
 
   test('TC-35 Esc closes the menu and puts keyboard focus back on the menu button', async ({ page }) => {
@@ -54,8 +67,30 @@ test.describe('Phone menu', { tag: '@REQ-10' }, () => {
     });
   }
 
-  test('TC-37 Messenger, Facebook and Instagram open in a new tab; email opens the mail app', async ({ page }) => {
+  test('TC-37 every contact in the menu can be reached, even on a short screen, and opens the right place', { tag: '@BUG-006' }, async ({ page, browserName }) => {
+    // A phone whose screen is shorter than the menu, like a Galaxy S24 Ultra with the browser bars showing
+    await page.setViewportSize({ width: 384, height: 700 });
     await page.getByRole('button', { name: 'Open menu' }).click();
+    const email = phoneMenu(page).getByRole('link', { name: /^Email/ });
+    const lastLine = phoneMenu(page).getByText('whisked by hand in bay, laguna');
+    await expect(lastLine).not.toBeInViewport({ ratio: 1 });                // the menu really is taller than the screen
+    if (browserName === 'chromium') {
+      // Swipe up inside the menu with a finger, like a customer would
+      const pageScroll = await page.evaluate(() => scrollY);
+      const cdp = await page.context().newCDPSession(page);
+      const x = 192;
+      for (let swipe = 0; swipe < 3; swipe++) {
+        await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y: 600 }] });
+        for (let i = 1; i <= 8; i++) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y: 600 - 50 * i }] });
+        await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+      }
+      await expect(email).toBeInViewport({ ratio: 1 });
+      await expect(lastLine).toBeInViewport({ ratio: 1 });
+      expect(await page.evaluate(() => scrollY), 'the page behind the menu should not move').toBe(pageScroll);
+    } else {
+      test.info().annotations.push({ type: 'checked by hand', description: 'WebKit cannot simulate a finger swipe here, so scrolling the menu on iPhone is part of manual test MT-03' });
+    }
+
     for (const [name, url] of [
       [/^Messenger/, 'https://m.me/mirou.matchaph'],
       [/^Facebook/, 'https://www.facebook.com/mirou.matchaph'],
