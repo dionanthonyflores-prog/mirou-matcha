@@ -16,7 +16,7 @@ Customers can browse the menu, build an order, check if their town is in the del
 ## What it does
 
 - **Menu with matcha and hojicha tabs.** Every drink card has a "+ order this" button that jumps to the order builder with that drink already picked.
-- **Order builder.** Pick a drink, regular milk or oatmilk (+₱10), and how many (up to 20 of each drink). The order slip keeps a running total, joins repeat drinks into one line, and remembers the order if the page is refreshed.
+- **Order builder.** Pick a drink, regular milk or oatmilk (+₱10), and how many (type it, or use − and +; up to 99 of each drink). The order slip keeps a running total, joins repeat drinks into one line, and remembers the order if the page is refreshed.
 - **Send on Messenger.** "Copy order & open Messenger" copies a ready-made order message (drinks, total, pick up or delivery, notes) and opens the shop's Messenger chat.
 - **Delivery checker.** Tap or type a town to see if it's in the delivery area. It understands typing without accents ("Los Banos") and local nicknames ("UPLB", "Elbi"). Towns outside the list get an "ask us on Messenger" link.
 - **"Open now" badge.** Shows *Open now*, *Closing soon* (last 30 minutes) or *Closed*, always in Philippine time, even if the visitor's phone is set to another time zone.

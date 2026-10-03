@@ -54,12 +54,15 @@ This is a **quality gate**: broken code cannot reach customers. The workflow is 
 
 Full reports, with steps, root causes, fixes and screenshots, are in the [defect log](defect-log.md).
 
+**Change request CR-01.** During an exploratory session, a 60-cup order raised the question of what the limit really was. The rule turned out to allow 40 of the same drink (20 regular plus 20 oatmilk) while the message said 20 was the most. When asked, the owner said the 20-cup limit was never her rule: she takes orders of any size. The limit was raised to 99 per drink (only to catch typing mistakes), customers can now type the quantity, and the affected tests were updated. See [Changes to the requirements](test-plan.md#changes-to-the-requirements).
+
 ## Highlights
 
 - **The regression tests are proven to catch their bugs.** The BUG-002 and BUG-003 tests were run against the old, buggy version of the site. They failed there, and only where the real bug was: the "Reviews" link failed while the other 4 menu links passed. They pass on the fixed version.
 - **Real bugs were told apart from test problems.** Eight failures turned out to be test or tooling issues, such as lazy-loaded photos, a mouse drag versus a finger swipe, and a test that tapped faster than any person could. Each was investigated and fixed in the test, not hidden. See [Investigated, not a bug](defect-log.md#investigated-not-a-bug).
 - **Flaky tests aren't tolerated.** A test that only failed sometimes was traced to its cause, fixed, and then repeated 5 times on each device (15/15 passed) before it was trusted. An independent run also caught a test running too close to its time limit, so every test's run time was checked against its limit.
 - **Evidence first.** After BUG-001 (where no "before" screenshot was kept), every bug had its evidence captured before the fix.
+- **Requirements get questioned, not just tested.** The 20-cup limit passed every test, because the tests checked what the code did. Only asking the owner showed it was never a business rule (CR-01).
 
 ## What's next
 

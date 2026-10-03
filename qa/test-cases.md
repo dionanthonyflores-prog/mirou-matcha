@@ -26,16 +26,16 @@ Requirements (REQ-xx) are listed in the [test plan](test-plan.md#in-scope). Bugs
 | ID | Test case | Expected result | Runs on | Guards |
 | --- | --- | --- | --- | --- |
 | TC-06 | Pick Earl Grey latte, then oatmilk, then quantity 3 | The price next to "Add" goes ₱200 → ₱210 → ₱630. | All | |
-| TC-07 | Press − at 1, then + 22 times | The quantity stays at 1, then stops at 20. | All | |
+| TC-07 | Press − at 1, then +; type 99 and press +; type "1a2b5"; press Enter; type 0; empty the box | Stays at 1, goes to 2, stops at 99 (₱15,840). Typing keeps only "12", Enter does not add the drink, and 0 or an empty box becomes 1. | All | CR-01 |
 | TC-08 | Look at the slip before adding anything | It shows "no drinks yet" and ₱0, Send is disabled, and there is no "clear order" link. | All | BUG-005 |
 | TC-09 | Add 2× Vanilla Crunch and 1× Seasalt Hojicha with oatmilk | Two lines, "oatmilk" noted on the second, total ₱560. | All | |
 | TC-10 | Add Matcha latte 2, then 3, then 1 with oatmilk | "5× Matcha latte" on one line, the oatmilk one on its own line, total ₱970. | All | |
-| TC-11 | Add 20 + 20 of one drink, then 1 more, then 15 + 10 of another | Each line stops at 20 with a message to order bigger amounts on Messenger. Total ₱6,200. | All | BUG-002 |
+| TC-11 | Add 99 + 99 of one drink, then 1 more, then 60 + 50 of another | Each line stops at 99 with a message to order more on Messenger. Total ₱30,690. | All | BUG-002, CR-01 |
 | TC-12 | Add two drinks, then press × on one | That line goes and the total drops from ₱600 to ₱400. | All | |
 | TC-13 | Add a drink, then press "clear order" | The slip is empty, ₱0, and Send is disabled. | All | |
-| TC-14 | Build an order (including a capped line), then reload the page | Same lines and total (₱3,640) after the reload. | All | BUG-002 |
+| TC-14 | Build an order (including a capped line), then reload the page | Same lines and total (₱16,280) after the reload. | All | BUG-002 |
 | TC-15 | Damage the saved order data, then load the page | The page works with an empty slip and no script errors. | All | |
-| TC-16 | Load a saved order with a drink no longer on the menu, 99 cups and an old price | The old drink is dropped, 99 becomes 20, today's prices are used: ₱3,880. | All | |
+| TC-16 | Load a saved order with a drink no longer on the menu, 150 cups and an old price | The old drink is dropped, 150 becomes 99, today's prices are used: ₱17,310. | All | |
 | TC-17 | Leave the slip on "Pick up" | No area box, no fee note, and the message says "For: Pick up". | All | |
 | TC-18 | Choose "Delivery", then Calamba | The area list shows the 5 towns plus "Somewhere else", the fee note appears, and the message says "Delivery to Calamba" and "+ delivery fee". | All | |
 | TC-19 | Choose "Delivery", then "Somewhere else" | The message asks the shop to check if they can deliver. | All | |

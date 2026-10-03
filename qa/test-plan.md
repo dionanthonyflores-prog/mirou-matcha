@@ -20,8 +20,8 @@ Customers use the site to see the menu, put an order together and send it to the
 | --- | --- |
 | REQ-01 | The menu shows every drink with its price, split into matcha and hojicha tabs. |
 | REQ-02 | "+ order this" on a menu card picks that drink in the order builder and goes there. |
-| REQ-03 | The order builder lets the customer pick a drink, regular milk or oatmilk (+₱10), and a quantity from 1 to 20. |
-| REQ-04 | The order slip shows each line and a correct total. The same drink and milk join one line, one drink stops at 20, and lines can be removed or the slip cleared. |
+| REQ-03 | The order builder lets the customer pick a drink, regular milk or oatmilk (+₱10), and a quantity from 1 to 99, with − and + or by typing it. |
+| REQ-04 | The order slip shows each line and a correct total. The same drink and milk join one line, one drink stops at 99 (a guard against typing mistakes; the owner has no limit on order size), and lines can be removed or the slip cleared. |
 | REQ-05 | The order is kept if the page is reloaded, and is re-checked against today's menu and prices. |
 | REQ-06 | The customer chooses pick up or delivery. Delivery asks for the area and mentions the delivery fee. |
 | REQ-07 | "Copy order & open Messenger" copies a complete order message and opens the shop's Messenger chat. An empty order cannot be sent. |
@@ -42,6 +42,12 @@ Customers use the site to see the menu, put an order together and send it to the
 - Load and performance testing. A small shop site gets low traffic, and it is hosted on GitHub Pages.
 - Old browsers that are no longer updated (for example Internet Explorer).
 
+### Changes to the requirements
+
+| ID | Date | Changed | Why | What was done |
+| --- | --- | --- | --- | --- |
+| CR-01 | 3 Oct 2026 | REQ-03, REQ-04 | During exploratory session MT-08, the tester built a 60-cup order (20 each of 3 drinks) and questioned the limit. Checking the rule showed it counted each drink-and-milk pair, so the same drink could reach 40 cups (20 with regular milk plus 20 with oatmilk) while the message said "20 of one drink is the most". Asked about it, the owner said the 20-cup limit was never her rule: she has no limit on order size. It had come with the site's original code. | The limit was raised to 99 per drink, only to stop typing mistakes like 1000 cups. Customers can now type the quantity instead of tapping + many times. The message now reads "The order slip takes up to 99 of each drink." TC-07, TC-11, TC-14 and TC-16 were updated, and TC-07 now also covers typing (letters, 0, an empty box, Enter). |
+
 ## 3. Approach
 
 The risk is highest where money and orders are involved, so the order builder, totals and the Messenger message get the most test cases. Navigation, photos and the badge come next.
@@ -58,7 +64,7 @@ The risk is highest where money and orders are involved, so the order builder, t
 
 Test design techniques used:
 
-- **Boundary values:** quantity 1 and 20; the badge at 11:59, 12:00, 20:29, 20:30, 20:59 and 21:00.
+- **Boundary values:** quantity 1 and 99 (plus 0, an empty box and letters when typed); the badge at 11:59, 12:00, 20:29, 20:30, 20:59 and 21:00.
 - **Equivalence classes:** town spellings (exact, all caps, no accents, with "city" or "Laguna", nicknames, partial names), towns outside the area, and inputs that are too short.
 - **Decision table:** pick up vs delivery × area chosen / not chosen / "somewhere else".
 - **State transitions:** menu tabs, phone menu open/closed, photo viewer open/closed and wrap-around.

@@ -316,7 +316,8 @@
   .qty { display: inline-flex; align-items: center; border: 1.5px solid #e2ddd0; border-radius: 999px; }
   .qty button { width: 42px; height: 42px; border: 0; background: none; font-size: 1.25rem; color: var(--ink); cursor: pointer; border-radius: 50%; }
   .qty button:hover { background: #eef2fc; }
-  .qty output { min-width: 28px; text-align: center; font-weight: 700; }
+  .qty input { width: 2.6em; padding: 6px 0; border: 0; border-radius: 8px; background: none; font: inherit; font-weight: 700; color: inherit; text-align: center; }
+  .qty input:focus { outline: 2px solid var(--peri); }
   .line-total { font: 500 1.25rem "DM Mono", monospace; color: var(--ink); }
   .add-row .btn { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
 
@@ -814,7 +815,7 @@
           <div class="add-row">
             <div class="qty" aria-label="How many">
               <button type="button" data-step="-1" aria-label="One less">−</button>
-              <output id="qty">1</output>
+              <input id="qty" type="text" inputmode="numeric" maxlength="2" value="1" aria-label="How many cups" autocomplete="off">
               <button type="button" data-step="1" aria-label="One more">+</button>
             </div>
             <span class="line-total" id="line-total">₱0</span>
@@ -1043,7 +1044,9 @@
     { name: "Vanilla Crunch Hojicha", price: 195, type: "hojicha" },
   ];
   const OAT_EXTRA = 10;
-  const MAX_QTY = 20;   // most cups of one drink on the order slip (bigger orders go through Messenger)
+  // The owner has no limit on order size. 99 per drink just stops typing mistakes (like 1000 cups) and keeps the slip tidy.
+  const MAX_QTY = 99;
+  const toQty = n => Math.min(MAX_QTY, Math.max(1, parseInt(n) || 1));   // any input → a whole number from 1 to MAX_QTY
   const MESSENGER = "https://m.me/mirou.matchaph";
   // Towns she delivers to. Add a town here and it shows up in the checker and the receipt.
   const AREAS = ["Bay", "Calamba", "Los Baños", "Cabuyao", "Victoria"];
@@ -1069,7 +1072,7 @@
     const d = DRINKS.find(d => d.name === l.name);
     if (!d) return list;
     const oat = l.oat === true;
-    const qty = Math.min(MAX_QTY, Math.max(1, parseInt(l.qty) || 1));
+    const qty = toQty(l.qty);
     const same = list.find(x => x.name === d.name && x.oat === oat);
     if (same) same.qty = Math.min(MAX_QTY, same.qty + qty);
     else list.push({ name: d.name, oat, qty, unit: d.price + (oat ? OAT_EXTRA : 0) });
@@ -1086,7 +1089,7 @@
 
   function updateForm() {
     const c = current();
-    $("qty").textContent = qty;
+    $("qty").value = qty;
     roll($("line-total"), c.unit * qty);
   }
 
@@ -1155,9 +1158,19 @@
 
   form.addEventListener("change", updateForm);
   form.querySelectorAll(".qty button").forEach(b => b.addEventListener("click", () => {
-    qty = Math.min(MAX_QTY, Math.max(1, qty + Number(b.dataset.step)));
+    qty = toQty(qty + Number(b.dataset.step));
     updateForm();
   }));
+  // The customer can also tap the number and type it. Only digits are kept, and the price follows as they type.
+  const qtyBox = $("qty");
+  qtyBox.addEventListener("input", () => {
+    qtyBox.value = qtyBox.value.replace(/\D/g, "").slice(0, 2);
+    if (qtyBox.value) { qty = toQty(qtyBox.value); roll($("line-total"), current().unit * qty); }
+  });
+  // Leaving the box tidies it up: empty or 0 becomes 1
+  qtyBox.addEventListener("change", () => { qty = toQty(qtyBox.value); updateForm(); });
+  // Enter closes the keyboard instead of adding the drink straight away
+  qtyBox.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); qtyBox.blur(); } });
   const drinkImg = {};   // drink name → its menu photo (filled in where the "+ order this" buttons are made)
   function bump() {
     const wrap = $("receipt-wrap");
@@ -1199,7 +1212,7 @@
     qty = 1;
     updateForm();
     $("order-status").textContent = capped
-      ? `${MAX_QTY} of one drink is the most the order slip takes. For a bigger order, just message us on Messenger ✿`
+      ? `The order slip takes up to ${MAX_QTY} of each drink. For more, just message us on Messenger ✿`
       : "";
     if (!added) return;
     if (same) same.qty += added; else order.push({ ...c, qty: added });

@@ -82,6 +82,8 @@ Severity and priority are defined in the [test plan](test-plan.md#6-bug-reportin
 - TC-11 (20 + 20, a full line plus 1, 15 + 10) and TC-14 (reload) pass on desktop, Android and iPhone.
 - Both tests **fail on all 3 set-ups** when run against the old code (commit `0558082`).
 
+**Later change (CR-01, 3 Oct 2026):** the owner confirmed she has no limit on order size; the 20 had come with the site's original code. The limit was raised to 99 per drink, only as a guard against typing mistakes, and the message now reads *"The order slip takes up to 99 of each drink. For more, just message us on Messenger ✿"*. The fix above still holds: one setting, used everywhere. TC-11 and TC-14 now test at 99. See [Changes to the requirements](test-plan.md#changes-to-the-requirements).
+
 ---
 
 ## BUG-003
@@ -196,5 +198,5 @@ Not every failing test means the product is broken. These failures were investig
 | Copied order text did not match (TC-22) | The test read the order before the "flying cup" animation had finished. Windows also stores copied line breaks differently. | The test waits for the slip to update and ignores the line-break difference. |
 | iPhone tests timed out | The iPhone browser engine (WebKit) takes about 1.2 seconds per click when run on Windows, versus 0.12 seconds for Chrome. That is the test engine, not the site. | The iPhone set-up gets a longer time limit. |
 | A menu photo "not loaded" on iPhone (TC-49), flaky on GitHub | The test raced down the whole page and then checked every photo at once. Safari's engine may postpone a lazy photo that only flashed past until it is on screen again. That is correct behaviour for a lazy photo. | The test now scrolls past each photo slowly, like a person, and looks again at any photo still missing. It passed 3 times on each set-up. |
-| TC-14 timed out on desktop (found by Dion during an independent run) | The trace showed the site working correctly (first drink on the slip, ₱440). The test was still pressing + when its 30-second limit ran out. It needs about 27 taps with real animations, and it was already using 81% of the limit on a quiet computer, so a busier one tipped it over. | TC-14 is marked as a slow test, and the default limit was raised to 60 seconds. On the next full run the closest test used 56% of its limit. |
+| TC-14 timed out on desktop (found by Dion during an independent run) | The trace showed the site working correctly (first drink on the slip, ₱440). The test was still pressing + when its 30-second limit ran out. It needs about 27 taps with real animations, and it was already using 81% of the limit on a quiet computer, so a busier one tipped it over. | TC-14 is marked as a slow test, and the default limit was raised to 60 seconds. On the next full run the closest test used 56% of its limit. (Since CR-01 the test types the quantity instead of tapping, and needs well under half its limit.) |
 | Radio buttons could not be "checked" | The real radio buttons are hidden behind pill-shaped labels by design. Customers tap the label. | Tests tap the label, like a customer, then confirm the choice took. |

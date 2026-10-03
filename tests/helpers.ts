@@ -36,11 +36,12 @@ export async function choose(radio: Locator) {
   await expect(radio).toBeChecked();
 }
 
-/** Press + or − until the quantity shows n */
+/** Type the quantity into the box, like a customer would, then leave the box */
 export async function setQty(page: Page, n: number) {
   const qty = page.locator('#qty');
-  for (let i = 0; i < 25 && Number(await qty.textContent()) < n; i++) await page.getByRole('button', { name: 'One more' }).click();
-  for (let i = 0; i < 25 && Number(await qty.textContent()) > n; i++) await page.getByRole('button', { name: 'One less' }).click();
+  await qty.fill(String(n));
+  await qty.blur();
+  await expect(qty).toHaveValue(String(n));
 }
 
 /** Pick a drink, milk and quantity, then press "+ Add to order" */

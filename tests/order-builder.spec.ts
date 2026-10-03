@@ -4,7 +4,7 @@ import { addToOrder, choose, drinkChoice, messengerText, setQty, slipLines, slip
 
 const lineTotal = (page: Page) => page.locator('#line-total .sr-only');
 const status = (page: Page) => page.locator('#order-status');
-const CAP_MESSAGE = '20 of one drink is the most the order slip takes. For a bigger order, just message us on Messenger ✿';
+const CAP_MESSAGE = 'The order slip takes up to 99 of each drink. For more, just message us on Messenger ✿';
 
 test.beforeEach(async ({ page }) => {
   await stubSocialSites(page);
@@ -21,11 +21,28 @@ test.describe('Choosing a drink', { tag: '@REQ-03' }, () => {
     await expect(lineTotal(page)).toHaveText('₱630');
   });
 
-  test('TC-07 quantity cannot go below 1 or above 20', async ({ page }) => {
+  test('TC-07 quantity stays from 1 to 99, with the buttons or by typing', { tag: '@CR-01' }, async ({ page }) => {
+    const qty = page.locator('#qty');
     await page.getByRole('button', { name: 'One less' }).click();
-    await expect(page.locator('#qty')).toHaveText('1');
-    for (let i = 0; i < 22; i++) await page.getByRole('button', { name: 'One more' }).click();
-    await expect(page.locator('#qty')).toHaveText('20');
+    await expect(qty).toHaveValue('1');                              // never below 1
+    await page.getByRole('button', { name: 'One more' }).click();
+    await expect(qty).toHaveValue('2');
+    await qty.fill('99');
+    await page.getByRole('button', { name: 'One more' }).click();
+    await expect(qty).toHaveValue('99');                             // never above 99
+    await expect(lineTotal(page)).toHaveText('₱15,840');             // 99 × ₱160 Matcha latte
+    await qty.fill('');
+    await qty.pressSequentially('1a2b5');                            // letters are ignored, and only 2 digits fit
+    await expect(qty).toHaveValue('12');
+    await qty.press('Enter');                                        // Enter closes the keyboard...
+    await expect(qty).not.toBeFocused();
+    await expect(slipLines(page)).toHaveCount(0);                    // ...and does not add the drink
+    await qty.fill('0');
+    await qty.blur();
+    await expect(qty).toHaveValue('1');                              // 0 becomes 1
+    await qty.fill('');
+    await qty.blur();
+    await expect(qty).toHaveValue('1');                              // so does an empty box
   });
 });
 
@@ -54,21 +71,20 @@ test.describe('Order slip', { tag: '@REQ-04' }, () => {
     await expect(slipTotal(page)).toHaveText('₱970');                // 5 × 160 + 170
   });
 
-  test('TC-11 one drink stops at 20 on the slip, with a message, however it is added', { tag: '@BUG-002' }, async ({ page }) => {
-    test.slow();   // about 60 taps on the + button
-    await addToOrder(page, 'Matcha latte', 20);
-    await addToOrder(page, 'Matcha latte', 20);
-    await expect(slipLines(page)).toHaveText(['20× Matcha latte']);
-    await expect(slipTotal(page)).toHaveText('₱3,200');
+  test('TC-11 one drink stops at 99 on the slip, with a message, however it is added', { tag: ['@BUG-002', '@CR-01'] }, async ({ page }) => {
+    await addToOrder(page, 'Matcha latte', 99);
+    await addToOrder(page, 'Matcha latte', 99);
+    await expect(slipLines(page)).toHaveText(['99× Matcha latte']);
+    await expect(slipTotal(page)).toHaveText('₱15,840');
     await expect(status(page)).toHaveText(CAP_MESSAGE);
 
     await addToOrder(page, 'Matcha latte', 1);                       // already full
-    await expect(slipLines(page)).toHaveText(['20× Matcha latte']);
+    await expect(slipLines(page)).toHaveText(['99× Matcha latte']);
 
-    await addToOrder(page, 'Hojicha latte', 15);
-    await addToOrder(page, 'Hojicha latte', 10);                     // only 5 more fit
-    await expect(slipLines(page)).toHaveText(['20× Matcha latte', '20× Hojicha latte']);
-    await expect(slipTotal(page)).toHaveText('₱6,200');              // 3,200 + 20 × 150
+    await addToOrder(page, 'Hojicha latte', 60);
+    await addToOrder(page, 'Hojicha latte', 50);                     // only 39 more fit
+    await expect(slipLines(page)).toHaveText(['99× Matcha latte', '99× Hojicha latte']);
+    await expect(slipTotal(page)).toHaveText('₱30,690');             // 15,840 + 99 × 150
   });
 
   test('TC-12 the × button removes one line and the total updates', async ({ page }) => {
@@ -91,14 +107,13 @@ test.describe('Order slip', { tag: '@REQ-04' }, () => {
 
 test.describe('Saved order', { tag: '@REQ-05' }, () => {
   test('TC-14 the order is still there after the page is reloaded', { tag: '@BUG-002' }, async ({ page }) => {
-    test.slow();   // about 27 taps on the + button
     await addToOrder(page, 'Toasted Milk Cereal', 2, 'oatmilk');
-    await addToOrder(page, 'Matcha latte', 20);
+    await addToOrder(page, 'Matcha latte', 99);
     await addToOrder(page, 'Matcha latte', 5);
-    await expect(slipTotal(page)).toHaveText('₱3,640');              // 2 × 220 + 20 × 160
+    await expect(slipTotal(page)).toHaveText('₱16,280');             // 2 × 220 + 99 × 160
     await page.reload();
-    await expect(slipLines(page)).toHaveText(['2× Toasted Milk Cereal', '20× Matcha latte']);
-    await expect(slipTotal(page)).toHaveText('₱3,640');
+    await expect(slipLines(page)).toHaveText(['2× Toasted Milk Cereal', '99× Matcha latte']);
+    await expect(slipTotal(page)).toHaveText('₱16,280');
   });
 
   test('TC-15 broken saved data does not break the page', async ({ page }) => {
@@ -115,12 +130,12 @@ test.describe('Saved order', { tag: '@REQ-05' }, () => {
   test("TC-16 a saved order is re-checked against today's menu and prices", async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem('mirou-order', JSON.stringify([
       { name: 'Ube latte', qty: 2, oat: false, unit: 180 },          // no longer on the menu
-      { name: 'Matcha latte', qty: 99, oat: true, unit: 1 },         // too many, and an old price
+      { name: 'Matcha latte', qty: 150, oat: true, unit: 1 },        // too many, and an old price
       { name: 'Matcha latte', qty: 3, oat: false, unit: 1 },
     ])));
     await page.reload();
-    await expect(slipLines(page)).toHaveText(['20× Matcha latte', '3× Matcha latte']);
-    await expect(slipTotal(page)).toHaveText('₱3,880');              // 20 × 170 + 3 × 160
+    await expect(slipLines(page)).toHaveText(['99× Matcha latte', '3× Matcha latte']);
+    await expect(slipTotal(page)).toHaveText('₱17,310');             // 99 × 170 + 3 × 160
   });
 });
 
