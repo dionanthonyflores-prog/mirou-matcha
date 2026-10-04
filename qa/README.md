@@ -69,7 +69,7 @@ Full reports, with steps, root causes, fixes and screenshots, are in the [defect
 
 ## What's next
 
-- Run the last manual test case, MT-05 (link preview on Facebook or Messenger). MT-01, MT-02, MT-04, MT-06, MT-07 and MT-08 are done. MT-03 (real iPhone) is deferred until an iPhone is available.
+- Run MT-03 (real iPhone) once an iPhone is available. The other 7 manual test cases are done.
 - Add an automated accessibility scan (axe-core) to catch colour-contrast and labelling issues.
 - Schedule a daily test run against the live site, so a problem with an outside service (fonts, smooth-scrolling library) is noticed even when nobody pushes code.
 
