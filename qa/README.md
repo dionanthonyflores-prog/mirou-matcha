@@ -91,4 +91,10 @@ BASE_URL=https://dionanthonyflores-prog.github.io/mirou-matcha/ npx playwright t
 
 ## How this was made
 
-This project was built with [Claude Code](https://claude.com/claude-code), an AI coding assistant, as a pair programmer. Commits it helped with are marked `Co-Authored-By: Claude`. I set the goals and rules, reviewed the results, reproduced findings in my own browser, and made the decisions, such as fixing the bugs on the live site before writing up the case study.
+I built this project with [Claude Code](https://claude.com/claude-code), an AI coding assistant, as my pair programmer. Commits it helped with are marked `Co-Authored-By: Claude`. I want to be transparent about how I work.
+
+**What I decided.** I set the rules: nothing from past employers goes in, and no private contact details in public. I chose to fix the bugs on the live site first, because it's a real business with real customers, and to keep a video and a screenshot for every test as evidence. When the 20-cup order limit looked wrong, I asked the owner instead of guessing, and the limit was changed based on her answer.
+
+**What I checked myself.** I tested by hand on my phone (Samsung Galaxy S24 Ultra) and on my desktop at different screen sizes using Inspect Element. I spotted the photo problem (BUG-001), confirmed BUG-002 and BUG-003 on my side, caught a test running out of time (TC-14) during my own run, and found BUG-006 and BUG-007 on my phone, then retested the fixes there.
+
+**What I learned.** How to use Claude to build a one-page website that looks good, and how to test it with automation. If I did it again, I would choose the same approach.
