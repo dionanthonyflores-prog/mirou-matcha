@@ -61,7 +61,7 @@ Full reports, with steps, root causes, fixes and screenshots, are in the [defect
 ## Highlights
 
 - **The regression tests are proven to catch their bugs.** The BUG-002 and BUG-003 tests were run against the old, buggy version of the site. They failed there, and only where the real bug was: the "Reviews" link failed while the other 4 menu links passed. They pass on the fixed version.
-- **Real bugs were told apart from test problems.** Eight failures turned out to be test or tooling issues, such as lazy-loaded photos, a mouse drag versus a finger swipe, and a test that tapped faster than any person could. Each was investigated and fixed in the test, not hidden. See [Investigated, not a bug](defect-log.md#investigated-not-a-bug).
+- **Real bugs were told apart from test problems.** Nine alarms turned out to be test or tooling issues, such as lazy-loaded photos, a mouse drag versus a finger swipe, a test that tapped faster than any person could, and a 25-second "slow page" that was really the test computer taking 21 seconds to connect. Each was investigated and fixed in the test or the measurement, not hidden. See [Investigated, not a bug](defect-log.md#investigated-not-a-bug).
 - **Flaky tests aren't tolerated.** A test that only failed sometimes was traced to its cause, fixed, and then repeated 5 times on each device (15/15 passed) before it was trusted. An independent run also caught a test running too close to its time limit, so every test's run time was checked against its limit.
 - **Evidence first.** After BUG-001 (where no "before" screenshot was kept), every bug had its evidence captured before the fix.
 - **Real phones find what emulators don't.** BUG-006 and BUG-007 passed every automated test, because the tests checked that the menu's links were correct, not that a customer could reach and use them on a shorter screen. Both were found by hand on a Galaxy S24 Ultra. The tests now cover both.
@@ -69,7 +69,7 @@ Full reports, with steps, root causes, fixes and screenshots, are in the [defect
 
 ## What's next
 
-- Run the remaining manual test cases (MT-02 and MT-04 to MT-07). MT-01 and MT-08 are done. MT-03 (real iPhone) is deferred until an iPhone is available.
+- Run the last manual test case, MT-05 (link preview on Facebook or Messenger). MT-01, MT-02, MT-04, MT-06, MT-07 and MT-08 are done. MT-03 (real iPhone) is deferred until an iPhone is available.
 - Add an automated accessibility scan (axe-core) to catch colour-contrast and labelling issues.
 - Schedule a daily test run against the live site, so a problem with an outside service (fonts, smooth-scrolling library) is noticed even when nobody pushes code.
 
